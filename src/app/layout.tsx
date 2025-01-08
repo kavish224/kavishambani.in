@@ -12,6 +12,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://kavishambani.in'),
   title: 'Kavish Ambani - Personal Website',
   description: 'Official website of Kavish Ambani.',
   openGraph: {
