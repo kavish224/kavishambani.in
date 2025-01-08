@@ -31,16 +31,43 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: "Kavish Ambani",
+              url: "https://kavishambani.in",
+              sameAs: [
+                "https://x.com/KavishAmbani",
+                "https://www.linkedin.com/in/kavish-ambani/",
+                "https://github.com/kavish224",
+                "https://www.instagram.com/kavish_ambani_22/"
+              ],
+              description:
+                "Welcome to the official website of Kavish Ambani showcasing projects, blogs, and insights.",
+              jobTitle: "Web Developer",
+              worksFor: {
+                "@type": "Organization",
+                name: "Your Current Company or Self-Employed",
+              },
+              knowsAbout: [
+                "Web Development",
+                "Stock Analytics",
+                "Software Engineering",
+              ],
+            }),
+          }}
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }
