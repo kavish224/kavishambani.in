@@ -26,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+      <link rel="canonical" href="https://www.kavishambani.in/" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://kavishambani.in
+Host: https://www.kavishambani.in
 
 # Sitemaps
-Sitemap: https://kavishambani.in/sitemap.xml
+Sitemap: https://www.kavishambani.in/sitemap.xml
