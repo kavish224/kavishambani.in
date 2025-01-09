@@ -1,2 +1,9 @@
+# *
 User-agent: *
-Disallow:
+Allow: /
+
+# Host
+Host: https://kavishambani.in
+
+# Sitemaps
+Sitemap: https://kavishambani.in/sitemap.xml
