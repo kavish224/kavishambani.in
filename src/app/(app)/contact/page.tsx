@@ -56,6 +56,27 @@ const Contact = () => {
             Send
           </button>
         </form>
+        <section className="my-10">
+          <h2 className="text-2xl font-semibold mb-4">Connect with Me</h2>
+          <div className="space-x-4">
+            <a
+              href="https://github.com/kavish224"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://www.linkedin.com/in/kavish-ambani"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500"
+            >
+              LinkedIn
+            </a>
+          </div>
+        </section>
       </main>
     </>
   );
