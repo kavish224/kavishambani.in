@@ -7,10 +7,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <Head>
         {/* Basic Meta Tags */}
-        <title>Kavish Ambani - Personal Website</title>
+        <title>Kavish Ambani - Official Website</title>
         <meta
           name="description"
-          content="Welcome to the official website of Kavish Ambani showcasing projects, blogs, and insights."
+          content="Welcome to the official website of Kavish Ambani | kavishambani | Kavish | Ambani showcasing projects, blogs, and insights."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="canonical" href="https://www.kavishambani.in/" />
@@ -58,6 +58,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "@context": "https://schema.org",
               "@type": "Person",
               name: "Kavish Ambani",
+              alternateName: "kavishambani",
+              givenName: "Kavish",
+              familyName: "Ambani",
               url: "https://kavishambani.in",
               sameAs: [
                 "https://x.com/KavishAmbani",
