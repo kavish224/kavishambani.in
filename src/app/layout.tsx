@@ -26,7 +26,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link rel="canonical" href="https://www.kavishambani.in/" />
+        <meta name="google-adsense-account" content="ca-pub-4213724490364096"></meta>
+        <link rel="canonical" href="https://www.kavishambani.in/" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
