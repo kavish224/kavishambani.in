@@ -13,13 +13,13 @@ const About = () => {
       <main className="p-6 max-w-3xl mx-auto text-white bg-black min-h-screen">
         <h1 className="text-4xl font-bold mb-4">About Me</h1>
         <p className="text-lg text-gray-300 leading-relaxed mb-6">
-          I’m <strong>Kavish Ambani</strong>. I’m a final-year B.Tech Computer Science student at Parul University, Gujarat. I'm passionate about building robust and scalable full-stack applications that solve real-world problems.
+          I&apos;m <strong>Kavish Ambani</strong>. I&apos;m a final-year B.Tech Computer Science student at Parul University, Gujarat. I&apos;m passionate about building robust and scalable full-stack applications that solve real-world problems.
         </p>
         <p className="text-gray-400 leading-relaxed mb-6">
           With hands-on experience in technologies like <strong>React</strong>, <strong>Next.js</strong>, <strong>Node.js</strong>, <strong>Firebase</strong>, <strong>Docker</strong>, and <strong>AWS</strong>, I specialize in developing high-performance apps with a focus on user experience, cloud deployment, and scalability.
         </p>
         <p className="text-gray-400 leading-relaxed mb-6">
-          I’ve built end-to-end platforms such as <a href="https://tools.kavishambani.in/" className="text-blue-400 underline" target="_blank" rel="noreferrer">Financial Tools</a>, <a href="https://juro-ai.vercel.app/" className="text-blue-400 underline" target="_blank" rel="noreferrer">Juro AI</a>, and <a href="https://videotube.kavishambani.in/" className="text-blue-400 underline" target="_blank" rel="noreferrer">VideoTube</a>. These projects reflect my interest in both frontend and backend development, as well as cloud infrastructure and DevOps.
+          I&apos;ve built end-to-end platforms such as <a href="https://tools.kavishambani.in/" className="text-blue-400 underline" target="_blank" rel="noreferrer">Financial Tools</a>, <a href="https://juro-ai.vercel.app/" className="text-blue-400 underline" target="_blank" rel="noreferrer">Juro AI</a>, and <a href="https://videotube.kavishambani.in/" className="text-blue-400 underline" target="_blank" rel="noreferrer">VideoTube</a>. These projects reflect my interest in both frontend and backend development, as well as cloud infrastructure and DevOps.
         </p>
 
         <section className="mb-10">

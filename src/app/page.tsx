@@ -46,7 +46,7 @@ const Home = () => {
             </Link>
           </h2>
           <p className="text-gray-300 leading-relaxed">
-            I'm a passionate developer from Gujarat, India, who loves building scalable, high-performance
+            I&apos;m a passionate developer from Gujarat, India, who loves building scalable, high-performance
             web applications. My goal is to create software that solves real-world problems and adds value.
             Through <strong>kavishambani.in</strong>, I share my work and experiences in tech.
           </p>
