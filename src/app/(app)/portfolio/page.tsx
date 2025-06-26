@@ -98,6 +98,19 @@ const Portfolio = () => {
             </li>
           </ul>
         </section>
+        <section className="my-10">
+          <h2 className="text-2xl font-semibold mb-4"></h2>
+          <div className="space-x-4">
+            <a
+              href="https://github.com/kavish224"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700"
+            >
+              GitHub
+            </a>
+          </div>
+        </section>
       </main>
     </>
   );
