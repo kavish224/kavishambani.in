@@ -8,14 +8,20 @@ const Home = () => {
         <title>Kavish Ambani - Developer</title>
         <meta
           name="description"
-          content="Welcome to Kavish Ambani's personal website showcasing projects, blogs, and more."
+          content="Welcome to Kavish Ambani's official personal website. Explore web development projects, blogs, and contact info. Also known as kavishambani online."
         />
       </Head>
       <main className="p-6 max-w-3xl mx-auto bg-black min-h-screen text-white">
         {/* Hero Section */}
         <section className="text-center my-10">
           <h1 className="text-4xl font-bold mb-4">Hi, I&apos;m Kavish Ambani.</h1>
-          <p className="text-xl text-gray-300 mb-6">Web Developer | Tech Enthusiast</p>
+          <p className="text-xl text-gray-300 mb-6">
+            Web Developer | Tech Enthusiast | Also known as <strong>kavishambani</strong> online.
+          </p>
+          <p className="text-gray-400 mb-6">
+            I build full-stack applications using modern technologies like React, Node.js, and MongoDB.
+            Welcome to my personal website where I share my projects, blogs, and development journey.
+          </p>
           <div className="space-x-4">
             <Link
               href="/portfolio"
@@ -40,9 +46,9 @@ const Home = () => {
             </Link>
           </h2>
           <p className="text-gray-300 leading-relaxed">
-            I am a passionate developer from Gujarat, India, with expertise in web development and a
-            knack for creating impactful projects. I thrive on solving problems and building
-            innovative solutions.
+            I'm a passionate developer from Gujarat, India, who loves building scalable, high-performance
+            web applications. My goal is to create software that solves real-world problems and adds value.
+            Through <strong>kavishambani.in</strong>, I share my work and experiences in tech.
           </p>
         </section>
 
