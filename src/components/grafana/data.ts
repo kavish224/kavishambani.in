@@ -13,8 +13,8 @@ export const PROFILE = {
 };
 
 export const STATS = [
-  { label: "Projects Deployed", sublabel: "total", value: 12, color: "var(--gf-green)", suffix: "" },
-  { label: "CI/CD Pipelines", sublabel: "pipelines built", value: 25, color: "var(--gf-blue)", suffix: "" },
+  { label: "Projects Deployed", sublabel: "total", value: 10, color: "var(--gf-green)", suffix: "+" },
+  { label: "CI/CD Pipelines", sublabel: "pipelines built", value: 10, color: "var(--gf-blue)", suffix: "+" },
   { label: "Uptime Achieved", sublabel: "avg availability", value: 99.9, color: "var(--gf-yellow)", suffix: "%" },
   { label: "Containers Managed", sublabel: "docker + k8s pods", value: 50, color: "var(--gf-orange)", suffix: "+" },
 ];
@@ -31,30 +31,22 @@ export const SKILLS = [
 ];
 
 export const PROJECTS = [
-  { ts: "2025-03-08 14:23:01", level: "deploy" as const, msg: "K8s Multi-Node Cluster — Production-grade cluster with Kubeadm, Calico CNI, Ingress controllers, HPA auto-scaling", tag: "kubernetes" },
+  { ts: "2025-03-08 14:23:01", level: "deploy" as const, msg: "K8s Multi-Node Cluster — Production-grade cluster with EKS as well as Baremetal K0s, Cilium CNI, Ingress controllers, HPA auto-scaling", tag: "kubernetes" },
   { ts: "2025-03-05 10:15:42", level: "build" as const, msg: "GitLab CI/CD Pipeline — Lint → Test → Docker build → ECR push → EKS deploy with rolling updates and rollback", tag: "gitlab-ci" },
-  { ts: "2025-02-28 09:30:15", level: "success" as const, msg: "Grafana Monitoring Stack — Prometheus + Loki + Grafana dashboards with custom alerting and SLO tracking", tag: "monitoring" },
-  { ts: "2025-02-20 16:45:33", level: "deploy" as const, msg: "AWS Infrastructure — VPC, EC2, RDS, S3, CloudFront via IaC. Security groups, IAM roles, cost optimization", tag: "aws" },
-  { ts: "2025-02-14 11:20:08", level: "info" as const, msg: "Docker Compose Microservices — Containerized multi-service app: API gateway, backend, Redis, PostgreSQL", tag: "docker" },
-  { ts: "2025-02-01 08:55:27", level: "build" as const, msg: "Automated Backup System — Cron pipeline for DB + volume backups, S3 lifecycle, encryption, Slack alerts", tag: "automation" },
-  { ts: "2025-01-18 13:40:51", level: "success" as const, msg: "Log Aggregation Pipeline — Fluentd → Loki → Grafana, 100k+ log lines/day, structured parsing, anomaly alerts", tag: "logging" },
+  { ts: "2025-02-28 09:30:15", level: "success" as const, msg: "Grafana Monitoring Stack — Prometheus + Loki + Tempo + Pyroscope Grafana dashboards with custom alerting and SLO tracking", tag: "monitoring" },
+  { ts: "2025-02-20 16:45:33", level: "deploy" as const, msg: "AWS Infrastructure — EC2, RDS, S3, EKS, Security groups, IAM roles, cost optimization", tag: "aws" },
+  { ts: "2025-02-14 11:20:08", level: "info" as const, msg: "Docker Compose Microservices — Containerized multi-service app: frontend, backend, Redis, PostgreSQL", tag: "docker" },
+  { ts: "2025-01-18 13:40:51", level: "success" as const, msg: "Log Metrics and Traces Aggregation Pipeline — Alloy → Loki, Prometheus, Tempo → Grafana, 1Million+ log lines/day, structured parsing, anomaly alerts", tag: "observability" },
   { ts: "2025-01-05 07:10:39", level: "deploy" as const, msg: "Nginx Reverse Proxy — SSL termination, rate limiting, load balancing, custom error pages", tag: "networking" },
 ];
 
 export const EXPERIENCE = [
   {
-    date: "2024 — Present",
+    date: "July 2025 — Present",
     role: "DevOps Intern",
-    org: "Current Organization",
+    org: "Meditab Software Inc.",
     desc: "Docker, Kubernetes, Grafana stack monitoring, GitLab CI/CD pipelines, AWS cloud infrastructure. Building and maintaining production-grade deployment workflows.",
     status: "active" as const,
-  },
-  {
-    date: "2023 — 2024",
-    role: "Learning & Building",
-    org: "Self-directed / Coursework",
-    desc: "Deep-dived into containerization, IaC, Linux administration, and cloud-native technologies. Built personal lab environments.",
-    status: "done" as const,
   },
   {
     date: "2022 — 2026",
@@ -78,7 +70,6 @@ export const TECH_STACK = [
 ];
 
 export const AVAILABILITY = [
-  { name: "Hiring", pct: "99.9%", segments: Array(30).fill("up" as const) },
   { name: "Learning", pct: "100%", segments: Array(30).fill("up" as const) },
   { name: "Collaboration", pct: "99.5%", segments: (() => { const a = Array(30).fill("up" as const); a[11] = "partial"; a[23] = "partial"; return a; })() },
   { name: "Coffee Intake", pct: "100%", segments: Array(30).fill("up" as const) },
