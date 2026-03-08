@@ -22,6 +22,7 @@ const I = {
   search:     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
   bell:       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>,
   question:   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
+  info:       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>,
   star:       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
   starFill:   <svg width="14" height="14" viewBox="0 0 24 24" fill="#fade2a" stroke="#fade2a" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
   share:      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>,
@@ -38,6 +39,9 @@ const I = {
   inspect:    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
   trash:      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>,
   kbd:        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6" y2="10"/><line x1="10" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="14" y2="10"/><line x1="18" y1="10" x2="18" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg>,
+  bookmark:   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>,
+  apps:       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>,
+  x:          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -123,59 +127,6 @@ function AnimatedValue({ target, suffix = "", color }: {
 }
 
 // ══════════════════════════════════════════════════════════════
-// GAUGE ARC — 270° speedometer style matching Grafana exactly
-// ══════════════════════════════════════════════════════════════
-function GaugeArc({ pct, color, label }: { pct: number; color: string; label: string }) {
-  const cx = 60, cy = 48, r = 44;
-  const toRad = (d: number) => (d * Math.PI) / 180;
-
-  // Math coords (y-up, CCW positive): gauge from 225° to 315° going CCW (through TOP on screen)
-  const START = toRad(225); // lower-left on screen
-  const END   = toRad(315); // lower-right on screen
-  const SWEEP = toRad(270); // total sweep angle
-
-  const pt = (a: number) => ({
-    x: +(cx + r * Math.cos(a)).toFixed(2),
-    y: +(cy - r * Math.sin(a)).toFixed(2), // flip y for screen coords
-  });
-
-  const s = pt(START);
-  const e = pt(END);
-
-  // Track: full 270° arc, CCW on screen = sweep-flag 0, large-arc 1
-  const trackD = `M ${s.x} ${s.y} A ${r} ${r} 0 1 0 ${e.x} ${e.y}`;
-
-  // Fill: from START decreasing math angle by pct*270°/100 (CCW on screen)
-  const fillAngle = START - (pct / 100) * SWEEP;
-  const fp = pt(fillAngle);
-  const fillLarge = START - fillAngle > Math.PI ? 1 : 0;
-  const fillD = pct > 0
-    ? `M ${s.x} ${s.y} A ${r} ${r} 0 ${fillLarge} 0 ${fp.x} ${fp.y}`
-    : null;
-
-  // Threshold gradient (Grafana colors at 0/80/100)
-  const stops =
-    pct >= 90 ? "#f2495c" :
-    pct >= 75 ? "#fade2a" :
-    color;
-
-  return (
-    <svg viewBox="0 0 120 92" style={{ width: "100%", maxWidth: 160, height: "auto", display: "block", margin: "0 auto" }}>
-      {/* Track */}
-      <path d={trackD} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth="10" strokeLinecap="round"/>
-      {/* Fill */}
-      {fillD && <path d={fillD} fill="none" stroke={stops} strokeWidth="10" strokeLinecap="round"/>}
-      {/* Min / Max labels at arc endpoints */}
-      <text x={s.x - 2} y="91" fill="rgba(255,255,255,0.38)" fontSize="8" textAnchor="middle" fontFamily="Inter,sans-serif">0</text>
-      <text x={e.x + 2} y="91" fill="rgba(255,255,255,0.38)" fontSize="8" textAnchor="middle" fontFamily="Inter,sans-serif">100</text>
-      {/* Value */}
-      <text x={cx} y={cy + 12} fill={stops} fontSize="19" fontWeight="500" textAnchor="middle" fontFamily="Inter,sans-serif">{pct}</text>
-      <text x={cx} y={cy + 25} fill="rgba(255,255,255,0.38)" fontSize="8.5" textAnchor="middle" fontFamily="Inter,sans-serif">{label}</text>
-    </svg>
-  );
-}
-
-// ══════════════════════════════════════════════════════════════
 // PANEL CHROME — exact Grafana 11 panel structure
 // ══════════════════════════════════════════════════════════════
 function Panel({ title, className = "", style, children, menuOpen, onMenuToggle }: {
@@ -241,78 +192,73 @@ function Row({ label, defaultOpen = true, children }: {
 const SIDEMENU = [
   {
     icon: I.home, label: "Home", href: "/",
-    sub: [],
   },
   {
     icon: I.dashboards, label: "Dashboards", href: "/portfolio", active: true,
-    sub: ["Browse", "Playlists", "Snapshots", "Library panels"],
+  },
+  {
+    icon: I.bookmark, label: "Bookmarks", href: undefined,
+  },
+  {
+    icon: I.star, label: "Starred", href: undefined,
+  },
+  {
+    icon: I.dashboards, label: "Dashboards", href: "/portfolio", active: true,
   },
   {
     icon: I.explore, label: "Explore", href: undefined,
-    sub: [],
   },
   {
-    icon: I.alert, label: "Alerting", href: undefined,
-    sub: ["Alert rules", "Contact points", "Notification policies", "Silences"],
+    icon: I.alert, label: "Alerts & IRM", href: undefined,
   },
   {
-    icon: I.plug, label: "Connections", href: undefined,
-    sub: ["Data sources", "Connect data"],
+    icon: I.gear, label: "AI & machine learning", href: undefined,
+  },
+  {
+    icon: I.plug, label: "Observability", href: undefined,
+  },
+  {
+    icon: I.apps, label: "Connections", href: undefined,
+  },
+  {
+    icon: I.apps, label: "More apps", href: undefined,
   },
 ];
 
 const SIDEMENU_BOTTOM = [
-  { icon: I.gear, label: "Administration", sub: ["General", "Plugins", "Users", "Teams", "Service accounts", "API keys"] },
-  { icon: <div className="gf-avatar-sm">KA</div>, label: "Kavish Ambani", sub: ["Profile", "Change password", "Sign out"] },
+  { icon: I.gear, label: "Administration" },
 ];
 
 function SideMenu() {
-  const [hover, setHover] = useState<number | null>(null);
-  const [hoverBottom, setHoverBottom] = useState<number | null>(null);
-
   return (
     <aside className="gf-sidemenu">
       <div className="gf-sidemenu__items">
         {SIDEMENU.map((item, i) => (
-          <div key={i} className="gf-sidemenu__item-wrap"
-            onMouseEnter={() => setHover(i)}
-            onMouseLeave={() => setHover(null)}>
+          <div key={i} className="gf-sidemenu__item-wrap">
             {item.href ? (
               <Link href={item.href} className={`gf-sidemenu__item ${item.active ? "gf-sidemenu__item--active" : ""}`}>
-                {item.icon}
+                <span className="gf-sidemenu__icon">{item.icon}</span>
+                <span className="gf-sidemenu__label">{item.label}</span>
+                <span className="gf-sidemenu__chev">{I.chevDown}</span>
               </Link>
             ) : (
-              <button className="gf-sidemenu__item">{item.icon}</button>
-            )}
-            {hover === i && (
-              <div className="gf-sidemenu__popover">
-                <div className="gf-sidemenu__popover-header">
-                  {item.href ? <Link href={item.href}>{item.label}</Link> : <span>{item.label}</span>}
-                </div>
-                {item.sub.length > 0 && (
-                  <ul className="gf-sidemenu__popover-list">
-                    {item.sub.map(s => <li key={s}><button>{s}</button></li>)}
-                  </ul>
-                )}
-              </div>
+              <button className={`gf-sidemenu__item ${item.active ? "gf-sidemenu__item--active" : ""}`}>
+                <span className="gf-sidemenu__icon">{item.icon}</span>
+                <span className="gf-sidemenu__label">{item.label}</span>
+                <span className="gf-sidemenu__chev">{I.chevDown}</span>
+              </button>
             )}
           </div>
         ))}
       </div>
       <div className="gf-sidemenu__bottom">
         {SIDEMENU_BOTTOM.map((item, i) => (
-          <div key={i} className="gf-sidemenu__item-wrap"
-            onMouseEnter={() => setHoverBottom(i)}
-            onMouseLeave={() => setHoverBottom(null)}>
-            <button className="gf-sidemenu__item">{item.icon}</button>
-            {hoverBottom === i && (
-              <div className="gf-sidemenu__popover">
-                <div className="gf-sidemenu__popover-header"><span>{item.label}</span></div>
-                <ul className="gf-sidemenu__popover-list">
-                  {item.sub.map(s => <li key={s}><button>{s}</button></li>)}
-                </ul>
-              </div>
-            )}
+          <div key={i} className="gf-sidemenu__item-wrap">
+            <button className="gf-sidemenu__item">
+              <span className="gf-sidemenu__icon">{item.icon}</span>
+              <span className="gf-sidemenu__label">{item.label}</span>
+              <span className="gf-sidemenu__chev">{I.chevDown}</span>
+            </button>
           </div>
         ))}
       </div>
@@ -355,37 +301,42 @@ export default function GrafanaDashboard() {
     [98.5, 99, 99.2, 99.5, 99.3, 99.7, 99.8, 99.6, 99.9, 99.9, 99.9, 100],
     [5, 10, 15, 20, 25, 28, 32, 38, 42, 47, 50, 55],
   ];
+  const volumeHeights = PROJECTS.map((_, i) => 34 + ((i * 11) % 44));
 
   return (
     <div className="gf-root">
 
       {/* ══════ TOP NAVIGATION BAR — 40px ══════ */}
       <header className="gf-topbar">
-        <button className="gf-topbar__menu-btn" aria-label="Open navigation menu">{I.menu}</button>
-        <Link className="gf-topbar__logo" href="/" aria-label="Go to Grafana home"><GrafanaLogo /></Link>
+        <div className="gf-topbar__left">
+          <Link className="gf-topbar__brand" href="/" aria-label="Go to Grafana home">
+            <GrafanaLogo />
+            <span>Grafana</span>
+          </Link>
+          <button className="gf-topbar__menu-btn" aria-label="Open navigation menu">{I.apps}</button>
+          <button className="gf-topbar__menu-btn" aria-label="close menu">{I.x}</button>
+        </div>
 
-        <nav className="gf-topbar__breadcrumb" aria-label="Breadcrumb">
-          <Link href="/" className="gf-bc__link">Home</Link>
-          <span className="gf-bc__sep">/</span>
-          <a href="#" className="gf-bc__link">Dashboards</a>
-          <span className="gf-bc__sep">/</span>
-          <span className="gf-bc__current">{PROFILE.dashboardSlug}</span>
-          {PROFILE.tags.map(t => (
-            <span key={t.text} className={`gf-tag gf-tag--${t.color}`}>{t.text}</span>
-          ))}
-        </nav>
+        <div className="gf-topbar__breadcrumb" aria-label="Breadcrumb">
+          <span className="gf-topbar__crumb">Dashboards</span>
+          <span className="gf-topbar__crumb-sep">{I.chevRight}</span>
+          <span className="gf-topbar__crumb-current">{PROFILE.dashboardSlug}</span>
+        </div>
 
         <div className="gf-topbar__search">
           <span className="gf-topbar__search-icon">{I.search}</span>
-          <span className="gf-topbar__search-text">Search or jump to…</span>
-          <kbd className="gf-topbar__search-kbd">⌘K</kbd>
+          <span className="gf-topbar__search-text">Search…</span>
+          <kbd className="gf-topbar__search-kbd">⌘+K</kbd>
         </div>
 
         <div className="gf-topbar__right">
+          <button className="gf-topbar__icon-btn" title="Add">{I.add}</button>
+          <button className="gf-topbar__icon-btn" title="Keyboard">{I.kbd}</button>
           <div className="gf-topbar__notif-wrap">
             <button className="gf-topbar__icon-btn" title="Notifications">{I.bell}<span className="gf-notif-dot"/></button>
           </div>
           <button className="gf-topbar__icon-btn" title="Help">{I.question}</button>
+          <button className="gf-topbar__invite-btn">Invite</button>
           <button className="gf-topbar__profile-btn" title="Kavish Ambani">
             <span className="gf-avatar">KA</span>
           </button>
@@ -399,28 +350,29 @@ export default function GrafanaDashboard() {
         <main className="gf-page" id="pageContent">
 
           {/* ══ DASHBOARD TOOLBAR ══ */}
+          <div className="gf-page-toolbar gf-page-toolbar--head">
+            <div className="gf-page-toolbar__left gf-page-toolbar__left--head" />
+            <div className="gf-page-toolbar__right">
+              <button className={`gf-toolbar-icon ${starred ? "gf-toolbar-icon--active" : ""}`} title={starred ? "Unmark as favorite" : "Mark as favorite"} onClick={e => { e.stopPropagation(); setStarred(s => !s); }}>
+                {starred ? I.starFill : I.star}
+              </button>
+              <button className="gf-toolbar-icon" title="Dashboard info">{I.info}</button>
+              <button className="gf-toolbar-btn" title="Edit">Edit</button>
+              <button className="gf-toolbar-btn" title="Export">Export {I.chevDown}</button>
+              <button className="gf-toolbar-btn gf-toolbar-btn--share" title="Share">Share {I.chevDown}</button>
+            </div>
+          </div>
+
           <div className="gf-page-toolbar">
             <div className="gf-page-toolbar__left">
-              <button
-                className={`gf-toolbar-btn ${starred ? "gf-toolbar-btn--active" : ""}`}
-                title={starred ? "Unmark as favorite" : "Mark as favorite"}
-                onClick={e => { e.stopPropagation(); setStarred(s => !s); }}
-              >
-                {starred ? I.starFill : I.star}
-                <span className="gf-toolbar-btn__label">{starred ? "Favorited" : "Favorite"}</span>
-              </button>
-              <button className="gf-toolbar-btn" title="Share dashboard">
-                {I.share}<span className="gf-toolbar-btn__label">Share</span>
-              </button>
-              <button className="gf-toolbar-btn" title="Dashboard settings">
-                {I.settings}<span className="gf-toolbar-btn__label">Settings</span>
-              </button>
+              <button className="gf-var-chip"><span>Job</span><strong>All</strong>{I.chevDown}</button>
+              <button className="gf-var-chip"><span>Instance</span><strong>All</strong>{I.chevDown}</button>
+              <button className="gf-var-chip"><span>Disk</span><strong>All</strong>{I.chevDown}</button>
+              <button className="gf-var-chip"><span>Network Device</span><strong>All</strong>{I.chevDown}</button>
             </div>
 
             <div className="gf-page-toolbar__right">
-              <button className="gf-toolbar-btn gf-toolbar-btn--add" title="Add panel">
-                {I.add}<span>Add</span>{I.chevDown}
-              </button>
+              <button className="gf-toolbar-btn gf-toolbar-btn--zoom" title="Back">«</button>
               <div className="gf-timepicker" ref={timeRef}>
                 <button
                   className="gf-timepicker__btn"
@@ -445,9 +397,7 @@ export default function GrafanaDashboard() {
                   </div>
                 )}
               </div>
-              <button className="gf-toolbar-btn gf-toolbar-btn--zoom" title="Zoom out">
-                {I.chevDown}
-              </button>
+              <button className="gf-toolbar-btn gf-toolbar-btn--zoom" title="Forward">»</button>
             </div>
           </div>
 
@@ -489,20 +439,26 @@ export default function GrafanaDashboard() {
 
             {/* ═══ ROW 2 — Skills Gauges ═══ */}
             <Row label="Skills — Proficiency">
-              {SKILLS.map((s, i) => (
-                <Panel
-                  key={i}
-                  title={s.name}
-                  className="gf-w-25 gf-h-gauge"
-                  style={{ animationDelay: `${i * 50}ms` }}
-                  menuOpen={openPanel === `gauge-${i}`}
-                  onMenuToggle={e => togglePanel(`gauge-${i}`, e)}
-                >
-                  <div className="gf-viz-gauge">
-                    <GaugeArc pct={s.pct} color={s.color} label="proficiency"/>
-                  </div>
-                </Panel>
-              ))}
+              <Panel
+                title="Skill Proficiency — Bar Gauge"
+                className="gf-w-100 gf-h-gauge"
+                menuOpen={openPanel === "gauge-summary"}
+                onMenuToggle={e => togglePanel("gauge-summary", e)}
+              >
+                <div className="gf-viz-bar-gauge">
+                  {SKILLS.map((s) => (
+                    <div key={s.name} className="gf-bg-row">
+                      <div className="gf-bg-row__head">
+                        <span className="gf-bg-row__name">{s.name}</span>
+                        <span className="gf-bg-row__val" style={{ color: s.color }}>{s.pct}%</span>
+                      </div>
+                      <div className="gf-bg-row__track">
+                        <div className="gf-bg-row__fill" style={{ width: `${s.pct}%`, background: s.color }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
             </Row>
 
             {/* ═══ ROW 3 — Projects / Logs ═══ */}
@@ -520,7 +476,7 @@ export default function GrafanaDashboard() {
                       <div key={i} className="gf-log-volume__bar-wrap">
                         <div
                           className={`gf-log-volume__bar gf-log-volume__bar--${p.level}`}
-                          style={{ height: `${30 + Math.random() * 50}%` }}
+                          style={{ height: `${volumeHeights[i]}%` }}
                         />
                       </div>
                     ))}
