@@ -53,15 +53,7 @@ const ic = {
 // ══════════════════════════════════════════════════════════════
 function GrafanaLogo({ size = 24 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 55 55" fill="none">
-      <circle cx="27.5" cy="27.5" r="27.5" fill="#1f2329" />
-      <path
-        d="M39.2 23.4c-.3-1.8-1.1-3.5-2.4-4.9l-5.6-5.6a2.7 2.7 0 00-3.2-.4L17.8 18a2.7 2.7 0 00-1.4 2.4v11.9c0 1 .5 1.9 1.4 2.4l10.2 5.9c1.1.6 2.3.5 3.2-.4l5.6-5.6c1.3-1.4 2.1-3.1 2.4-4.9.2-2 .2-4 0-6z"
-        fill="#FF780A"
-      />
-      <circle cx="27.5" cy="27.5" r="6.2" fill="#1f2329" />
-      <circle cx="27.5" cy="27.5" r="3.5" fill="#FF780A" />
-    </svg>
+    <img src="/grafana.svg" width={size} height={size} alt="Grafana icon" style={{ display: 'block' }} />
   );
 }
 
@@ -298,14 +290,14 @@ export default function GrafanaDashboard() {
         <nav className="gf-topbar__breadcrumb" aria-label="Breadcrumb">
           <span className="gf-topbar__crumb">Dashboards</span>
           <span className="gf-topbar__sep">{ic.chevR}</span>
-          <span className="gf-topbar__current">{PROFILE.dashboardSlug}</span>
+          <span className="gf-topbar__current">EC2 Ubuntu Instance Overview</span>
         </nav>
 
         {/* Search */}
         <div className="gf-topbar__search" role="search" aria-label="Search Grafana">
           <span className="gf-topbar__search-icon">{ic.search}</span>
-          <span className="gf-topbar__search-txt">Search Grafana</span>
-          <kbd className="gf-topbar__search-kbd">⌘ K</kbd>
+          <span className="gf-topbar__search-txt">Search...</span>
+          <span className="gf-topbar__search-kbd">⌘+k</span>
         </div>
 
         {/* Right icons */}
@@ -342,9 +334,9 @@ export default function GrafanaDashboard() {
               </button>
               <button className="gf-tbr-icon" title="Dashboard info">{ic.info}</button>
               <div className="gf-toolbar__div" />
-              <button className="gf-tbr-btn">{ic.edit} Edit</button>
+              <button className="gf-tbr-btn">Edit</button>
               <button className="gf-tbr-btn">Export {ic.chevD}</button>
-              <button className="gf-tbr-btn gf-tbr-btn--primary">{ic.share} Share</button>
+              <button className="gf-tbr-btn gf-tbr-btn--primary">Share {ic.chevD}</button>
             </div>
           </div>
 
@@ -369,7 +361,7 @@ export default function GrafanaDashboard() {
               <div className="gf-tp" ref={tpRef}>
                 {/* ‹ back */}
                 <button className="gf-tp__nav gf-tp__nav--l" title="Move time range back">
-                  {ic.chevL}
+                  &laquo;
                 </button>
 
                 {/* Main time range button */}
@@ -384,17 +376,9 @@ export default function GrafanaDashboard() {
                   {ic.chevD}
                 </button>
 
-                {/* Refresh + interval */}
-                <button className="gf-tp__refresh" title="Refresh dashboard">
-                  {ic.refresh}
-                  <span className="gf-tp__refresh-div" />
-                  <span style={{ fontSize: 12 }}>30s</span>
-                  {ic.chevD}
-                </button>
-
                 {/* › forward */}
                 <button className="gf-tp__nav gf-tp__nav--r" title="Move time range forward">
-                  {ic.chevR}
+                  &raquo;
                 </button>
 
                 {/* Dropdown */}
@@ -416,6 +400,20 @@ export default function GrafanaDashboard() {
 
               {/* Zoom out */}
               <button className="gf-tp__zoom" title="Zoom out time range">{ic.zoomOut}</button>
+
+              <div style={{ width: 8 }} />
+
+              {/* Refresh */}
+              <div style={{ display: 'flex' }}>
+                <button className="gf-tp__refresh" title="Refresh dashboard">
+                  {ic.refresh}
+                  <span style={{ marginLeft: 6, fontWeight: 500 }}>Refresh</span>
+                </button>
+                <button className="gf-tp__refresh-int" title="Change refresh interval">
+                  <span style={{ fontWeight: 500 }}>30s</span>
+                  <span style={{ marginLeft: 4, display: 'flex' }}>{ic.chevD}</span>
+                </button>
+              </div>
             </div>
           </div>
 

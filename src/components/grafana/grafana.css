@@ -257,8 +257,8 @@
   margin: 0 8px;
   background: var(--gf-canvas);
   border: 1px solid var(--gf-border-med);
-  border-radius: 2px;
-  cursor: pointer;
+  border-radius: 32px;
+  cursor: text;
   transition: border-color 0.15s, background 0.15s;
   flex-shrink: 0;
 }
@@ -284,9 +284,7 @@
   font-family: var(--gf-font-mono);
   font-size: 11px;
   color: var(--gf-text-dis);
-  background: var(--gf-bg-sec);
-  border: 1px solid var(--gf-border-weak);
-  border-radius: 2px;
+  background: transparent;
   padding: 1px 6px;
   white-space: nowrap;
   letter-spacing: 0;
@@ -646,12 +644,12 @@
   align-items: center;
   gap: 6px;
   height: 32px;
-  padding: 0 12px;
+  padding: 0 16px;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--gf-text);
   border: 1px solid var(--gf-border-med);
-  border-radius: 2px;
+  border-radius: 32px;
   transition: background 0.1s, border-color 0.1s;
   white-space: nowrap;
 }
@@ -716,7 +714,7 @@
   height: 28px;
   background: transparent;
   border: 1px solid var(--gf-border-med);
-  border-radius: 2px;
+  border-radius: 32px;
   overflow: hidden;
   cursor: pointer;
   transition: border-color 0.1s, background 0.1s;
@@ -769,7 +767,7 @@
   height: 28px;
   background: transparent;
   border: 1px solid var(--gf-border-med);
-  border-radius: 2px;
+  border-radius: 32px;
   color: var(--gf-text-sec);
   font-size: 16px;
   transition: background 0.1s, color 0.1s, border-color 0.1s;
@@ -782,12 +780,13 @@
 }
 
 .gf-tp__nav--l {
-  border-radius: 2px 0 0 2px;
+  border-radius: 32px 0 0 32px;
   margin-right: -1px;
 }
 
 .gf-tp__nav--r {
-  border-radius: 0 2px 2px 0;
+  border-radius: 0 32px 32px 0;
+  border-left: none;
   margin-left: -1px;
 }
 
@@ -825,17 +824,41 @@
   align-items: center;
   gap: 4px;
   height: 28px;
+  padding: 0 10px;
+  font-size: 13px;
+  color: var(--gf-text-sec);
+  background: transparent;
+  border: 1px solid var(--gf-border-med);
+  border-radius: 32px 0 0 32px;
+  white-space: nowrap;
+  transition: background 0.1s, color 0.1s;
+  cursor: pointer;
+}
+
+.gf-tp__refresh:hover {
+  background: var(--gf-hover);
+  color: var(--gf-text);
+}
+
+.gf-tp__refresh-int {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 28px;
   padding: 0 8px;
   font-size: 13px;
   color: var(--gf-text-sec);
   background: transparent;
   border: 1px solid var(--gf-border-med);
-  border-radius: 0 2px 2px 0;
+  border-left: none;
+  border-radius: 0 32px 32px 0;
+  margin-left: -1px;
   white-space: nowrap;
   transition: background 0.1s, color 0.1s;
+  cursor: pointer;
 }
 
-.gf-tp__refresh:hover {
+.gf-tp__refresh-int:hover {
   background: var(--gf-hover);
   color: var(--gf-text);
 }
@@ -855,7 +878,7 @@
   width: 28px;
   height: 28px;
   border: 1px solid var(--gf-border-med);
-  border-radius: 2px;
+  border-radius: 32px;
   color: var(--gf-text-sec);
   margin-left: 4px;
   transition: background 0.1s, color 0.1s;
