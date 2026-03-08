@@ -591,10 +591,11 @@
   align-items: center;
   gap: 6px;
   height: 32px;
-  padding: 0 16px;
+  padding: 0 12px;
   font-size: 14px;
   font-weight: 500;
   color: var(--gf-text);
+  background: transparent;
   border: 1px solid var(--gf-border-med);
   border-radius: 32px;
   transition: background 0.1s, border-color 0.1s;
@@ -611,11 +612,12 @@
   background: var(--gf-blue);
   border-color: var(--gf-blue);
   color: #fff;
+  padding: 0 12px;
 }
 
 .gf-tbr-btn--primary:hover {
-  background: #3566c2;
-  border-color: #3566c2;
+  background: #2a5298;
+  border-color: #2a5298;
   color: #fff;
 }
 

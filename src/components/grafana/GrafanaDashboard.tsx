@@ -43,7 +43,7 @@ const ic = {
   eye: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>,
   inspect: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>,
   trash: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2" /></svg>,
-  zoomOut: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /><line x1="8" y1="11" x2="14" y2="11" /></svg>,
+  zoomOut: <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /><line x1="8" y1="11" x2="14" y2="11" /></svg>,
   times: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>,
   pin: <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>,
 };
@@ -357,10 +357,13 @@ export default function GrafanaDashboard() {
               </div>
 
               <div className="gf-ctrlbar__right">
+                {/* Zoom out */}
+                <button className="gf-tp__zoom" title="Zoom out time range">{ic.zoomOut}</button>
+
                 {/* Time picker group */}
                 <div className="gf-tp" ref={tpRef}>
                   {/* ‹ back */}
-                  <button className="gf-tp__nav gf-tp__nav--l" title="Move time range back">
+                  <button className="gf-tp__nav gf-tp__nav--l" title="Move time range back" style={{ fontSize: 13 }}>
                     &laquo;
                   </button>
 
@@ -370,14 +373,15 @@ export default function GrafanaDashboard() {
                     onClick={e => { e.stopPropagation(); setTpOpen(o => !o); setOpenPanel(null); }}
                     aria-expanded={tpOpen}
                     title="Change time range"
+                    style={{ fontWeight: 500 }}
                   >
                     <span className="gf-tp__clock">{ic.clock}</span>
                     <span>{TIME_RANGES[timeIdx]}</span>
-                    {ic.chevD}
+                    <span style={{ marginLeft: 6, display: 'flex' }}>{ic.chevD}</span>
                   </button>
 
                   {/* › forward */}
-                  <button className="gf-tp__nav gf-tp__nav--r" title="Move time range forward">
+                  <button className="gf-tp__nav gf-tp__nav--r" title="Move time range forward" style={{ fontSize: 13 }}>
                     &raquo;
                   </button>
 
@@ -398,19 +402,14 @@ export default function GrafanaDashboard() {
                   )}
                 </div>
 
-                {/* Zoom out */}
-                <button className="gf-tp__zoom" title="Zoom out time range">{ic.zoomOut}</button>
-
-                <div style={{ width: 8 }} />
-
                 {/* Refresh */}
-                <div style={{ display: 'flex' }}>
-                  <button className="gf-tp__refresh" title="Refresh dashboard">
+                <div style={{ display: 'flex', marginLeft: 8 }}>
+                  <button className="gf-tbr-btn" style={{ borderRadius: '32px 0 0 32px', paddingRight: 8, marginRight: -1 }} title="Refresh dashboard">
                     {ic.refresh}
-                    <span style={{ marginLeft: 6, fontWeight: 500 }}>Refresh</span>
+                    <span style={{ marginLeft: 4 }}>Refresh</span>
                   </button>
-                  <button className="gf-tp__refresh-int" title="Change refresh interval">
-                    <span style={{ fontWeight: 500 }}>30s</span>
+                  <button className="gf-tbr-btn" style={{ borderRadius: '0 32px 32px 0', borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: 8 }} title="Change refresh interval">
+                    <span>30s</span>
                     <span style={{ marginLeft: 4, display: 'flex' }}>{ic.chevD}</span>
                   </button>
                 </div>
