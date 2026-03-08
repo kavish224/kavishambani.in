@@ -1664,7 +1664,7 @@
   align-content: start;
 }
 
-.gf-contact-card {
+.gf-root .gf-contact-card {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -1677,7 +1677,7 @@
   cursor: pointer;
 }
 
-.gf-contact-card:hover {
+.gf-root .gf-contact-card:hover {
   background: var(--gf-hover);
   border-color: var(--gf-border-med);
 }
@@ -1689,41 +1689,105 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  color: var(--gf-text-sec);
+  background: var(--gf-canvas);
+  border: 1px solid var(--gf-border-weak);
 }
 
 .gf-contact-icon--email {
-  background: rgba(61, 113, 217, 0.12);
   color: var(--gf-blue-text);
 }
 
 .gf-contact-icon--github {
-  background: rgba(204, 204, 220, 0.06);
-  color: var(--gf-text);
+  color: #fff;
 }
 
 .gf-contact-icon--linkedin {
-  background: rgba(10, 102, 194, 0.15);
-  color: #5ba3d9;
+  color: #0a66c2;
 }
 
 .gf-contact-icon--location {
-  background: rgba(108, 207, 142, 0.12);
-  color: var(--gf-green);
+  color: var(--gf-orange);
 }
 
 .gf-contact-k {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--gf-text-dis);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 1px;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
 }
 
 .gf-contact-v {
-  font-size: 12px;
-  font-family: var(--gf-font-mono);
+  font-size: 13px;
+  font-weight: 500;
   color: var(--gf-text);
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   TOAST NOTIFICATION (Email Copied)
+   ══════════════════════════════════════════════════════════════ */
+.gf-toast {
+  position: fixed;
+  top: 60px;
+  right: 16px;
+  z-index: 9999;
+  background: var(--gf-bg-elev);
+  border: 1px solid var(--gf-border-med);
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: flex-start;
+  min-width: 280px;
+  max-width: 400px;
+  padding: 12px 16px 16px 16px;
+  gap: 12px;
+  animation: gf-toast-in 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes gf-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.gf-toast-edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gf-green);
+  border-radius: 2px 0 0 2px;
+}
+
+.gf-toast-icon {
+  color: var(--gf-green);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.gf-toast-title {
+  color: var(--gf-text);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.gf-toast-msg {
+  color: var(--gf-text-sec);
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 

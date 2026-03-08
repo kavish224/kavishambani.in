@@ -79,7 +79,7 @@ export const CONTACT = {
   email: "kavish@kavishambani.in",
   github: { url: "https://github.com/kavish224", handle: "kavish224" },
   linkedin: { url: "https://www.linkedin.com/in/kavish-ambani", handle: "kavish-ambani" },
-  location: "Gujarat, India",
+  location: "Ahmedabad, Gujarat, India",
 };
 
 export const TIME_RANGES = [
