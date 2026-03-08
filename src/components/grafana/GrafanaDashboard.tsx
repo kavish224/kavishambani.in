@@ -51,9 +51,11 @@ const ic = {
 // ══════════════════════════════════════════════════════════════
 // GRAFANA LOGO — exact official SVG
 // ══════════════════════════════════════════════════════════════
+import Image from 'next/image';
+
 function GrafanaLogo({ size = 24 }: { size?: number }) {
   return (
-    <img src="/grafana.svg" width={size} height={size} alt="Grafana icon" style={{ display: 'block' }} />
+    <Image src="/grafana.svg" width={size} height={size} alt="Grafana icon" style={{ display: 'block' }} />
   );
 }
 
