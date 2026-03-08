@@ -203,7 +203,12 @@ function SideMenu() {
           <GrafanaLogo size={22} />
           <span>Grafana</span>
         </div>
-        <button className="gf-sidemenu__hdr-close" title="Close menu">{ic.times}</button>
+        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+          <button className="gf-sidemenu__hdr-close" title="Dock menu">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 3v18" /></svg>
+          </button>
+          <button className="gf-sidemenu__hdr-close" title="Close menu">{ic.times}</button>
+        </div>
       </div>
 
       {/* Nav list — padding: 8px 8px 16px 4px from MegaMenu source */}
@@ -274,327 +279,323 @@ export default function GrafanaDashboard() {
   return (
     <div className="gf-root">
 
-      {/* ══════ TOP BAR — 48px (getChromeHeaderLevelHeight) ══════ */}
-      <header className="gf-topbar">
-
-        {/* Left — logo section, same width as sidemenu (300px) */}
-        <div className="gf-topbar__logo-section">
-          <Link className="gf-topbar__brand" href="/" aria-label="Go to home">
-            <GrafanaLogo size={22} />
-            <span>Grafana</span>
-          </Link>
-          <button className="gf-topbar__toggle" aria-label="Toggle menu">{ic.menu}</button>
-        </div>
-
-        {/* Breadcrumb */}
-        <nav className="gf-topbar__breadcrumb" aria-label="Breadcrumb">
-          <span className="gf-topbar__crumb">Dashboards</span>
-          <span className="gf-topbar__sep">{ic.chevR}</span>
-          <span className="gf-topbar__current">EC2 Ubuntu Instance Overview</span>
-        </nav>
-
-        {/* Search */}
-        <div className="gf-topbar__search" role="search" aria-label="Search Grafana">
-          <span className="gf-topbar__search-icon">{ic.search}</span>
-          <span className="gf-topbar__search-txt">Search...</span>
-          <span className="gf-topbar__search-kbd">⌘+k</span>
-        </div>
-
-        {/* Right icons */}
-        <div className="gf-topbar__right">
-          <button className="gf-topbar__icon" title="Add new">{ic.plus}</button>
-          <div className="gf-topbar__vdiv" />
-          <div style={{ position: "relative" }}>
-            <button className="gf-topbar__icon" title="Alerting & notifications">{ic.bell}</button>
-            <span className="gf-notif" />
-          </div>
-          <button className="gf-topbar__icon" title="Help & documentation">{ic.help}</button>
-          <div className="gf-topbar__vdiv" />
-          <button className="gf-topbar__invite">Invite</button>
-          <button className="gf-avatar" title={PROFILE.name} aria-label="Profile">KA</button>
-        </div>
-      </header>
-
       {/* ══════ MAIN LAYOUT ══════ */}
-      <div className="gf-layout">
+      <div className="gf-layout" style={{ display: 'flex', height: '100vh', overflow: 'hidden', width: '100vw' }}>
         <SideMenu />
 
-        <main className="gf-page" id="pageContent">
+        <div className="gf-main-container" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, overflow: 'hidden' }}>
+          {/* ══════ TOP BAR — 48px ══════ */}
+          <header className="gf-topbar" style={{ paddingLeft: 16 }}>
 
-          {/* ── Toolbar row 1: Star / Info / Edit / Export / Share ── */}
-          <div className="gf-toolbar">
-            <div className="gf-toolbar__left" />
-            <div className="gf-toolbar__right">
-              <button
-                className={`gf-tbr-icon${starred ? " gf-tbr-icon--starred" : ""}`}
-                onClick={e => { e.stopPropagation(); setStarred(s => !s); }}
-                title={starred ? "Remove from starred" : "Mark as starred"}
-              >
-                {starred ? ic.starFill : ic.starLine}
+            {/* Breadcrumb */}
+            <nav className="gf-topbar__breadcrumb" aria-label="Breadcrumb">
+              <span className="gf-topbar__crumb">Dashboards</span>
+              <span className="gf-topbar__sep">{ic.chevR}</span>
+              <span className="gf-topbar__current">EC2 Ubuntu Instance Overview</span>
+            </nav>
+
+            {/* Search */}
+            <div className="gf-topbar__search" role="search" aria-label="Search Grafana">
+              <span className="gf-topbar__search-icon">{ic.search}</span>
+              <span className="gf-topbar__search-txt">Search...</span>
+              <span className="gf-topbar__search-kbd">⌘+k</span>
+            </div>
+
+            {/* Right icons */}
+            <div className="gf-topbar__right">
+              <button className="gf-topbar__icon" title="Add new">{ic.plus}</button>
+              <button className="gf-topbar__icon" title="Help">{ic.help}</button>
+              <button className="gf-topbar__icon" title="Ask AI">{ic.ai}</button>
+              <button className="gf-topbar__invite">
+                <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="8.5" cy="7" r="4" /><line x1="20" y1="8" x2="20" y2="14" /><line x1="23" y1="11" x2="17" y2="11" /></svg>
+                  Invite
+                </span>
               </button>
-              <button className="gf-tbr-icon" title="Dashboard info">{ic.info}</button>
-              <div className="gf-toolbar__div" />
-              <button className="gf-tbr-btn">Edit</button>
-              <button className="gf-tbr-btn">Export {ic.chevD}</button>
-              <button className="gf-tbr-btn gf-tbr-btn--primary">Share {ic.chevD}</button>
+              <button className="gf-avatar" title={PROFILE.name} aria-label="Profile">KA</button>
             </div>
-          </div>
+          </header>
 
-          {/* ── Toolbar row 2: Variable chips + time picker ── */}
-          <div className="gf-ctrlbar">
-            <div className="gf-ctrlbar__left">
-              {[
-                { name: "Job", val: "All" },
-                { name: "Instance", val: "All" },
-                { name: "Disk", val: "All" },
-                { name: "Network Device", val: "All" },
-              ].map(v => (
-                <button key={v.name} className="gf-var" aria-label={`${v.name} variable`}>
-                  <span className="gf-var__name">{v.name}</span>
-                  <span className="gf-var__val">{v.val} {ic.chevD}</span>
-                </button>
-              ))}
-            </div>
+          <main className="gf-page" id="pageContent">
 
-            <div className="gf-ctrlbar__right">
-              {/* Time picker group */}
-              <div className="gf-tp" ref={tpRef}>
-                {/* ‹ back */}
-                <button className="gf-tp__nav gf-tp__nav--l" title="Move time range back">
-                  &laquo;
-                </button>
-
-                {/* Main time range button */}
+            {/* ── Toolbar row 1: Star / Info / Edit / Export / Share ── */}
+            <div className="gf-toolbar">
+              <div className="gf-toolbar__left" />
+              <div className="gf-toolbar__right">
                 <button
-                  className="gf-tp__btn"
-                  onClick={e => { e.stopPropagation(); setTpOpen(o => !o); setOpenPanel(null); }}
-                  aria-expanded={tpOpen}
-                  title="Change time range"
+                  className={`gf-tbr-icon${starred ? " gf-tbr-icon--starred" : ""}`}
+                  onClick={e => { e.stopPropagation(); setStarred(s => !s); }}
+                  title={starred ? "Remove from starred" : "Mark as starred"}
                 >
-                  <span className="gf-tp__clock">{ic.clock}</span>
-                  <span>{TIME_RANGES[timeIdx]}</span>
-                  {ic.chevD}
+                  {starred ? ic.starFill : ic.starLine}
                 </button>
+                <button className="gf-tbr-icon" title="Dashboard info">{ic.info}</button>
+                <div className="gf-toolbar__div" />
+                <button className="gf-tbr-btn">Edit</button>
+                <button className="gf-tbr-btn">Export <span style={{ marginLeft: 4, display: 'flex' }}>{ic.chevD}</span></button>
+                <div style={{ display: 'flex' }}>
+                  <button className="gf-tbr-btn gf-tbr-btn--primary" style={{ borderRadius: '32px 0 0 32px', paddingRight: 10, marginRight: -1 }}>Share</button>
+                  <button className="gf-tbr-btn gf-tbr-btn--primary" style={{ borderRadius: '0 32px 32px 0', borderLeft: '1px solid rgba(0,0,0,0.2)', paddingLeft: 6, paddingRight: 8 }}><span style={{ display: 'flex' }}>{ic.chevD}</span></button>
+                </div>
+              </div>
+            </div>
 
-                {/* › forward */}
-                <button className="gf-tp__nav gf-tp__nav--r" title="Move time range forward">
-                  &raquo;
-                </button>
+            {/* ── Toolbar row 2: Variable chips + time picker ── */}
+            <div className="gf-ctrlbar">
+              <div className="gf-ctrlbar__left">
+                {[
+                  { name: "Job", val: "All" },
+                  { name: "Instance", val: "All" },
+                  { name: "Disk", val: "All" },
+                  { name: "Network Device", val: "All" },
+                ].map(v => (
+                  <button key={v.name} className="gf-var" aria-label={`${v.name} variable`}>
+                    <span className="gf-var__name">{v.name}</span>
+                    <span className="gf-var__val">{v.val} {ic.chevD}</span>
+                  </button>
+                ))}
+              </div>
 
-                {/* Dropdown */}
-                {tpOpen && (
-                  <div className="gf-tp__dd" onClick={e => e.stopPropagation()}>
-                    <div className="gf-tp__dd-head">Quick ranges</div>
-                    {TIME_RANGES.map((r, i) => (
-                      <button
-                        key={i}
-                        className={`gf-tp__dd-option${i === timeIdx ? " gf-tp__dd-option--active" : ""}`}
-                        onClick={() => { setTimeIdx(i); setTpOpen(false); }}
-                      >
-                        {r}
-                      </button>
+              <div className="gf-ctrlbar__right">
+                {/* Time picker group */}
+                <div className="gf-tp" ref={tpRef}>
+                  {/* ‹ back */}
+                  <button className="gf-tp__nav gf-tp__nav--l" title="Move time range back">
+                    &laquo;
+                  </button>
+
+                  {/* Main time range button */}
+                  <button
+                    className="gf-tp__btn"
+                    onClick={e => { e.stopPropagation(); setTpOpen(o => !o); setOpenPanel(null); }}
+                    aria-expanded={tpOpen}
+                    title="Change time range"
+                  >
+                    <span className="gf-tp__clock">{ic.clock}</span>
+                    <span>{TIME_RANGES[timeIdx]}</span>
+                    {ic.chevD}
+                  </button>
+
+                  {/* › forward */}
+                  <button className="gf-tp__nav gf-tp__nav--r" title="Move time range forward">
+                    &raquo;
+                  </button>
+
+                  {/* Dropdown */}
+                  {tpOpen && (
+                    <div className="gf-tp__dd" onClick={e => e.stopPropagation()}>
+                      <div className="gf-tp__dd-head">Quick ranges</div>
+                      {TIME_RANGES.map((r, i) => (
+                        <button
+                          key={i}
+                          className={`gf-tp__dd-option${i === timeIdx ? " gf-tp__dd-option--active" : ""}`}
+                          onClick={() => { setTimeIdx(i); setTpOpen(false); }}
+                        >
+                          {r}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Zoom out */}
+                <button className="gf-tp__zoom" title="Zoom out time range">{ic.zoomOut}</button>
+
+                <div style={{ width: 8 }} />
+
+                {/* Refresh */}
+                <div style={{ display: 'flex' }}>
+                  <button className="gf-tp__refresh" title="Refresh dashboard">
+                    {ic.refresh}
+                    <span style={{ marginLeft: 6, fontWeight: 500 }}>Refresh</span>
+                  </button>
+                  <button className="gf-tp__refresh-int" title="Change refresh interval">
+                    <span style={{ fontWeight: 500 }}>30s</span>
+                    <span style={{ marginLeft: 4, display: 'flex' }}>{ic.chevD}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* ══════ CANVAS ══════ */}
+            <div className="gf-canvas">
+
+              {/* Row 1 — Stats */}
+              <Row label="Instance Overview">
+                {STATS.map((s, i) => (
+                  <Panel
+                    key={i}
+                    title={s.label}
+                    cn="gf-w-25 gf-h-stat"
+                    style={{ animationDelay: `${i * 50}ms` }}
+                    open={openPanel === `s${i}`}
+                    onToggle={e => togglePanel(`s${i}`, e)}
+                  >
+                    <div className="gf-stat">
+                      <div className="gf-stat__bg">
+                        <Sparkline data={sparkData[i]} color={s.color} id={`sp${i}`} areaMode />
+                      </div>
+                      <div className="gf-stat__fg">
+                        <Counter to={s.value} suffix={s.suffix} color={s.color} />
+                        <div className="gf-stat__sub">{s.sublabel}</div>
+                      </div>
+                    </div>
+                  </Panel>
+                ))}
+              </Row>
+
+              {/* Row 2 — Skills */}
+              <Row label="Skills — Proficiency">
+                <Panel
+                  title="Skill Proficiency — Bar Gauge"
+                  cn="gf-w-100 gf-h-gauge"
+                  open={openPanel === "gauge"}
+                  onToggle={e => togglePanel("gauge", e)}
+                >
+                  <div className="gf-gauge">
+                    {SKILLS.map(s => (
+                      <div key={s.name} className="gf-gauge-row">
+                        <div className="gf-gauge-row__head">
+                          <span className="gf-gauge-row__name">{s.name}</span>
+                          <span className="gf-gauge-row__pct" style={{ color: s.color }}>{s.pct}%</span>
+                        </div>
+                        <div className="gf-gauge-row__track">
+                          <div className="gf-gauge-row__fill" style={{ width: `${s.pct}%`, background: s.color }} />
+                        </div>
+                      </div>
                     ))}
                   </div>
-                )}
-              </div>
+                </Panel>
+              </Row>
 
-              {/* Zoom out */}
-              <button className="gf-tp__zoom" title="Zoom out time range">{ic.zoomOut}</button>
-
-              <div style={{ width: 8 }} />
-
-              {/* Refresh */}
-              <div style={{ display: 'flex' }}>
-                <button className="gf-tp__refresh" title="Refresh dashboard">
-                  {ic.refresh}
-                  <span style={{ marginLeft: 6, fontWeight: 500 }}>Refresh</span>
-                </button>
-                <button className="gf-tp__refresh-int" title="Change refresh interval">
-                  <span style={{ fontWeight: 500 }}>30s</span>
-                  <span style={{ marginLeft: 4, display: 'flex' }}>{ic.chevD}</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* ══════ CANVAS ══════ */}
-          <div className="gf-canvas">
-
-            {/* Row 1 — Stats */}
-            <Row label="Instance Overview">
-              {STATS.map((s, i) => (
+              {/* Row 3 — Logs */}
+              <Row label="Projects — Deployment Logs">
                 <Panel
-                  key={i}
-                  title={s.label}
-                  cn="gf-w-25 gf-h-stat"
-                  style={{ animationDelay: `${i * 50}ms` }}
-                  open={openPanel === `s${i}`}
-                  onToggle={e => togglePanel(`s${i}`, e)}
+                  title={`deployment.log  •  {job="ci-pipeline", env="production"}`}
+                  cn="gf-w-100 gf-h-logs"
+                  open={openPanel === "logs"}
+                  onToggle={e => togglePanel("logs", e)}
                 >
-                  <div className="gf-stat">
-                    <div className="gf-stat__bg">
-                      <Sparkline data={sparkData[i]} color={s.color} id={`sp${i}`} areaMode />
+                  <div className="gf-logs">
+                    <div className="gf-log-vol">
+                      {PROJECTS.map((p, i) => (
+                        <div key={i} className="gf-log-vol__wrap">
+                          <div className={`gf-log-vol__bar gf-log-vol__bar--${p.level}`} style={{ height: `${volH[i]}%` }} />
+                        </div>
+                      ))}
                     </div>
-                    <div className="gf-stat__fg">
-                      <Counter to={s.value} suffix={s.suffix} color={s.color} />
-                      <div className="gf-stat__sub">{s.sublabel}</div>
+                    <div className="gf-log-rows">
+                      {PROJECTS.map((p, i) => (
+                        <div key={i} className="gf-log-row">
+                          <span className="gf-log-ts">{p.ts}</span>
+                          <span className={`gf-log-lvl gf-log-lvl--${p.level}`}>{p.level.toUpperCase()}</span>
+                          <span className="gf-log-msg">{p.msg}<span className="gf-log-chip">{p.tag}</span></span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </Panel>
-              ))}
-            </Row>
+              </Row>
 
-            {/* Row 2 — Skills */}
-            <Row label="Skills — Proficiency">
-              <Panel
-                title="Skill Proficiency — Bar Gauge"
-                cn="gf-w-100 gf-h-gauge"
-                open={openPanel === "gauge"}
-                onToggle={e => togglePanel("gauge", e)}
-              >
-                <div className="gf-gauge">
-                  {SKILLS.map(s => (
-                    <div key={s.name} className="gf-gauge-row">
-                      <div className="gf-gauge-row__head">
-                        <span className="gf-gauge-row__name">{s.name}</span>
-                        <span className="gf-gauge-row__pct" style={{ color: s.color }}>{s.pct}%</span>
-                      </div>
-                      <div className="gf-gauge-row__track">
-                        <div className="gf-gauge-row__fill" style={{ width: `${s.pct}%`, background: s.color }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Panel>
-            </Row>
-
-            {/* Row 3 — Logs */}
-            <Row label="Projects — Deployment Logs">
-              <Panel
-                title={`deployment.log  •  {job="ci-pipeline", env="production"}`}
-                cn="gf-w-100 gf-h-logs"
-                open={openPanel === "logs"}
-                onToggle={e => togglePanel("logs", e)}
-              >
-                <div className="gf-logs">
-                  <div className="gf-log-vol">
-                    {PROJECTS.map((p, i) => (
-                      <div key={i} className="gf-log-vol__wrap">
-                        <div className={`gf-log-vol__bar gf-log-vol__bar--${p.level}`} style={{ height: `${volH[i]}%` }} />
+              {/* Row 4 — Experience + Tech */}
+              <Row label="Experience & Tech Stack">
+                <Panel title="Experience — Timeline" cn="gf-w-50 gf-h-xl" open={openPanel === "tl"} onToggle={e => togglePanel("tl", e)}>
+                  <div className="gf-timeline">
+                    {EXPERIENCE.map((ex, i) => (
+                      <div key={i} className="gf-tl-item">
+                        <div className={`gf-tl-dot gf-tl-dot--${ex.status === "active" ? "active" : "done"}`} />
+                        <div className="gf-tl-body">
+                          <div className="gf-tl-date">{ex.date}</div>
+                          <div className="gf-tl-role">{ex.role}</div>
+                          <div className="gf-tl-org">{ex.org}</div>
+                          <div className="gf-tl-desc">{ex.desc}</div>
+                        </div>
                       </div>
                     ))}
                   </div>
-                  <div className="gf-log-rows">
-                    {PROJECTS.map((p, i) => (
-                      <div key={i} className="gf-log-row">
-                        <span className="gf-log-ts">{p.ts}</span>
-                        <span className={`gf-log-lvl gf-log-lvl--${p.level}`}>{p.level.toUpperCase()}</span>
-                        <span className="gf-log-msg">{p.msg}<span className="gf-log-chip">{p.tag}</span></span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Panel>
-            </Row>
+                </Panel>
 
-            {/* Row 4 — Experience + Tech */}
-            <Row label="Experience & Tech Stack">
-              <Panel title="Experience — Timeline" cn="gf-w-50 gf-h-xl" open={openPanel === "tl"} onToggle={e => togglePanel("tl", e)}>
-                <div className="gf-timeline">
-                  {EXPERIENCE.map((ex, i) => (
-                    <div key={i} className="gf-tl-item">
-                      <div className={`gf-tl-dot gf-tl-dot--${ex.status === "active" ? "active" : "done"}`} />
-                      <div className="gf-tl-body">
-                        <div className="gf-tl-date">{ex.date}</div>
-                        <div className="gf-tl-role">{ex.role}</div>
-                        <div className="gf-tl-org">{ex.org}</div>
-                        <div className="gf-tl-desc">{ex.desc}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Panel>
-
-              <Panel title="Tech Stack — Inventory Table" cn="gf-w-50 gf-h-xl" open={openPanel === "tbl"} onToggle={e => togglePanel("tbl", e)}>
-                <div className="gf-table-wrap">
-                  <table className="gf-table">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Level</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {TECH_STACK.map((t, i) => (
-                        <tr key={i}>
-                          <td><span className={`gf-badge gf-badge--${t.badge}`}>{t.name}</span></td>
-                          <td className="gf-td-dim">{t.category}</td>
-                          <td className="gf-td-dim">{t.level}</td>
-                          <td>
-                            <span className={t.active ? "gf-status--active" : "gf-status--info"}>
-                              ● {t.active ? "Active" : "Learning"}
-                            </span>
-                          </td>
+                <Panel title="Tech Stack — Inventory Table" cn="gf-w-50 gf-h-xl" open={openPanel === "tbl"} onToggle={e => togglePanel("tbl", e)}>
+                  <div className="gf-table-wrap">
+                    <table className="gf-table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Category</th>
+                          <th>Level</th>
+                          <th>Status</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </Panel>
-            </Row>
-
-            {/* Row 5 — Availability + Contact */}
-            <Row label="Availability & Contact">
-              <Panel title="Availability — State History (30 days)" cn="gf-w-50 gf-h-md" open={openPanel === "av"} onToggle={e => togglePanel("av", e)}>
-                <div className="gf-state-hist">
-                  {AVAILABILITY.map((a, i) => (
-                    <div key={i} className="gf-sh-row">
-                      <div className="gf-sh-label">{a.name}</div>
-                      <div className="gf-sh-bar">
-                        {a.segments.map((seg, j) => (
-                          <div key={j} className={`gf-sh-seg gf-sh-seg--${seg}`} title={seg} />
+                      </thead>
+                      <tbody>
+                        {TECH_STACK.map((t, i) => (
+                          <tr key={i}>
+                            <td><span className={`gf-badge gf-badge--${t.badge}`}>{t.name}</span></td>
+                            <td className="gf-td-dim">{t.category}</td>
+                            <td className="gf-td-dim">{t.level}</td>
+                            <td>
+                              <span className={t.active ? "gf-status--active" : "gf-status--info"}>
+                                ● {t.active ? "Active" : "Learning"}
+                              </span>
+                            </td>
+                          </tr>
                         ))}
-                      </div>
-                      <div className="gf-sh-pct">{a.pct}</div>
-                    </div>
-                  ))}
-                </div>
-              </Panel>
-
-              <Panel title="Contact — Endpoints" cn="gf-w-50 gf-h-md" open={openPanel === "ct"} onToggle={e => togglePanel("ct", e)}>
-                <div className="gf-contact">
-                  <a className="gf-contact-card" href={`mailto:${CONTACT.email}`}>
-                    <span className="gf-contact-icon gf-contact-icon--email">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
-                    </span>
-                    <div><div className="gf-contact-k">Email</div><div className="gf-contact-v">{CONTACT.email}</div></div>
-                  </a>
-                  <a className="gf-contact-card" href={CONTACT.github.url} target="_blank" rel="noopener noreferrer">
-                    <span className="gf-contact-icon gf-contact-icon--github">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
-                    </span>
-                    <div><div className="gf-contact-k">GitHub</div><div className="gf-contact-v">{CONTACT.github.handle}</div></div>
-                  </a>
-                  <a className="gf-contact-card" href={CONTACT.linkedin.url} target="_blank" rel="noopener noreferrer">
-                    <span className="gf-contact-icon gf-contact-icon--linkedin">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-                    </span>
-                    <div><div className="gf-contact-k">LinkedIn</div><div className="gf-contact-v">{CONTACT.linkedin.handle}</div></div>
-                  </a>
-                  <div className="gf-contact-card">
-                    <span className="gf-contact-icon gf-contact-icon--location">
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                    </span>
-                    <div><div className="gf-contact-k">Location</div><div className="gf-contact-v">{CONTACT.location}</div></div>
+                      </tbody>
+                    </table>
                   </div>
-                </div>
-              </Panel>
-            </Row>
+                </Panel>
+              </Row>
 
-          </div>{/* /gf-canvas */}
-        </main>
+              {/* Row 5 — Availability + Contact */}
+              <Row label="Availability & Contact">
+                <Panel title="Availability — State History (30 days)" cn="gf-w-50 gf-h-md" open={openPanel === "av"} onToggle={e => togglePanel("av", e)}>
+                  <div className="gf-state-hist">
+                    {AVAILABILITY.map((a, i) => (
+                      <div key={i} className="gf-sh-row">
+                        <div className="gf-sh-label">{a.name}</div>
+                        <div className="gf-sh-bar">
+                          {a.segments.map((seg, j) => (
+                            <div key={j} className={`gf-sh-seg gf-sh-seg--${seg}`} title={seg} />
+                          ))}
+                        </div>
+                        <div className="gf-sh-pct">{a.pct}</div>
+                      </div>
+                    ))}
+                  </div>
+                </Panel>
+
+                <Panel title="Contact — Endpoints" cn="gf-w-50 gf-h-md" open={openPanel === "ct"} onToggle={e => togglePanel("ct", e)}>
+                  <div className="gf-contact">
+                    <a className="gf-contact-card" href={`mailto:${CONTACT.email}`}>
+                      <span className="gf-contact-icon gf-contact-icon--email">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="M22 7l-10 7L2 7" /></svg>
+                      </span>
+                      <div><div className="gf-contact-k">Email</div><div className="gf-contact-v">{CONTACT.email}</div></div>
+                    </a>
+                    <a className="gf-contact-card" href={CONTACT.github.url} target="_blank" rel="noopener noreferrer">
+                      <span className="gf-contact-icon gf-contact-icon--github">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
+                      </span>
+                      <div><div className="gf-contact-k">GitHub</div><div className="gf-contact-v">{CONTACT.github.handle}</div></div>
+                    </a>
+                    <a className="gf-contact-card" href={CONTACT.linkedin.url} target="_blank" rel="noopener noreferrer">
+                      <span className="gf-contact-icon gf-contact-icon--linkedin">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
+                      </span>
+                      <div><div className="gf-contact-k">LinkedIn</div><div className="gf-contact-v">{CONTACT.linkedin.handle}</div></div>
+                    </a>
+                    <div className="gf-contact-card">
+                      <span className="gf-contact-icon gf-contact-icon--location">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></svg>
+                      </span>
+                      <div><div className="gf-contact-k">Location</div><div className="gf-contact-v">{CONTACT.location}</div></div>
+                    </div>
+                  </div>
+                </Panel>
+              </Row>
+
+            </div>{/* /gf-canvas */}
+          </main>
+        </div>
       </div>
     </div>
   );

@@ -141,69 +141,17 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   TOP BAR — 48px (getChromeHeaderLevelHeight = 48 with unifiedNavbars)
+   TOP BAR — 48px
    ══════════════════════════════════════════════════════════════ */
 .gf-topbar {
   height: 48px;
   min-height: 48px;
-  background: var(--gf-bg);
+  background: var(--gf-canvas);
   border-bottom: 1px solid var(--gf-border-weak);
   display: flex;
   align-items: center;
   z-index: 1001;
   flex-shrink: 0;
-  position: sticky;
-  top: 0;
-}
-
-/* Logo section — same width as docked sidemenu (300px)
-   border-right separates it from the breadcrumb — matches real Grafana */
-.gf-topbar__logo-section {
-  width: 300px;
-  min-width: 300px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 0 8px;
-  gap: 0;
-  flex-shrink: 0;
-  border-right: 1px solid var(--gf-border-weak);
-}
-
-/* Grafana logo link */
-.gf-topbar__brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 8px;
-  color: var(--gf-text);
-  font-size: 16px;
-  font-weight: 400;
-  height: 100%;
-  flex: 1;
-  white-space: nowrap;
-}
-
-.gf-topbar__brand:hover {
-  color: var(--gf-text);
-}
-
-/* Toggle / hamburger button */
-.gf-topbar__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 2px;
-  color: var(--gf-text-sec);
-  transition: background 0.1s, color 0.1s;
-  flex-shrink: 0;
-}
-
-.gf-topbar__toggle:hover {
-  background: var(--gf-hover);
-  color: var(--gf-text);
 }
 
 /* Breadcrumb */
@@ -211,7 +159,6 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 0 8px;
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -429,7 +376,7 @@
   min-height: 48px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
   padding: 0 8px;
   border-bottom: 1px solid var(--gf-border-weak);
   flex-shrink: 0;
