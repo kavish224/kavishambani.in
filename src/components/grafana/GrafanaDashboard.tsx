@@ -556,7 +556,7 @@ export default function GrafanaDashboard() {
                             <div key={j} className={`gf-sh-seg gf-sh-seg--${seg}`} title={seg} />
                           ))}
                         </div>
-                        <div className="gf-sh-pct">{a.pct}</div>
+                        <div className="gf-sh-pct" style={a.segments[0] === 'down' ? { color: 'var(--gf-red)' } : undefined}>{a.pct}</div>
                       </div>
                     ))}
                   </div>

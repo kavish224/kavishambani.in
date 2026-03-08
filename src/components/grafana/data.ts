@@ -72,7 +72,7 @@ export const TECH_STACK = [
 export const AVAILABILITY = [
   { name: "Learning", pct: "100%", segments: Array(30).fill("up" as const) },
   { name: "Collaboration", pct: "99.5%", segments: (() => { const a = Array(30).fill("up" as const); a[11] = "partial"; a[23] = "partial"; return a; })() },
-  { name: "Coffee Intake", pct: "100%", segments: Array(30).fill("up" as const) },
+  { name: "Coffee Intake", pct: "200%", segments: Array(30).fill("down" as const) },
 ];
 
 export const CONTACT = {
