@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
-import GrafanaDashboard from "@/components/grafana/GrafanaDashboard";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "Portfolio — Kavish Ambani | DevOps Dashboard",
-  description:
-    "Explore Kavish Ambani's DevOps portfolio — presented as a Grafana dashboard. Docker, Kubernetes, CI/CD, AWS, and monitoring expertise.",
-};
-
+// Dashboard has moved to the homepage — redirect to avoid duplicate content
 export default function PortfolioPage() {
-  return <GrafanaDashboard />;
+  redirect("/");
 }
