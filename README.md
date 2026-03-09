@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kavish Ambani Portfolio — Grafana v11 Dashboards
 
-## Getting Started
+A personal portfolio website meticulously designed as a **pixel-perfect replica of a Grafana dashboard**. Built with **Next.js 15, React 19, and TypeScript**.
 
-First, run the development server:
+🚀 **Live Site**: [kavishambani.in](https://kavishambani.in)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+![Kavish Ambani Portfolio Preview](https://kavishambani.in/globe.svg)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📊 Project Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This project is not just a website—it's an **Observability-themed engineering showcase**. I've rebuilt the entire Grafana v11 design system from scratch using only custom CSS (no external chart libraries like Chart.js or D3). 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Key Features
 
-## Learn More
+- **📱 Fully Responsive Design**: 
+  - **Desktop**: Full Grafana sidebar (300px) and breadcrumb pathing.
+  - **Tablet**: Sidebar collapses to an **icon-rail system** (56px).
+  - **Mobile**: Sidebar becomes a **hamburger-menu toggle** with a slide-in overlay.
+- **✨ Grafana Fidelity**: 
+  - Identical color palettes (`#111217` canvas, `#181b1f` panels).
+  - Precise `cubic-bezier` animation curves for all panel entries.
+  - Instant statistic counters (no count-up lag).
+- **📈 Custom Logic**:
+  - **Availability — State History**: Custom-built timeline visualization for skill learning & project availability.
+  - **Projects — Logs**: Deterministic layout for project histories presented as "System Logs".
+  - **Skill Gauges**: Pure CSS bar gauges with Grafana-style thresholds.
+- **⚡ Performance First**: 
+  - Built with Next.js 15 (App Router).
+  - Zero heavy third-party dependencies for styling.
+  - SEO optimized with proper meta tags and JSON-LD structured data.
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Library**: [React 19](https://react.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) & [Custom Scoped CSS](src/components/grafana/grafana.css)
+- **Deployment**: Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Getting Started
 
-## Deploy on Vercel
+1. **Clone and Install**:
+   ```bash
+   git clone https://github.com/kavish224/kavishambani.in.git
+   cd kavishambani.in
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Production Build**:
+   ```bash
+   npm run build
+   npm run start
+   ```
+
+## 📂 Project Structure
+
+- `src/app/`: Next.js 15 App Router (layouts and page entry).
+- `src/components/grafana/`: The core dashboard module.
+  - `GrafanaDashboard.tsx`: Main dashboard component layout.
+  - `grafana.css`: The "Grafana Design System" (CSS variables, tokens, and components).
+  - `data.ts`: Centralized folder for all portfolio content (easy to update).
+- `public/`: Static assets (favicon, site-map).
+
+## 🧑‍💻 Author
+
+**Kavish Ambani**  
+DevOps Engineer | Infrastructure as Code | Observability
+
+- [GitHub](https://github.com/kavish224)
+- [LinkedIn](https://www.linkedin.com/in/kavish-ambani/)
+- [Twitter](https://x.com/KavishAmbani)
+
+---
+*Disclaimer: This is a standalone React-based replica project for portfolio purposes and is not affiliated with Grafana Labs.*
