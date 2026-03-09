@@ -92,36 +92,26 @@ function Sparkline({ data, color, id, areaMode = false }: {
     <svg ref={svgRef} width="100%" height={h} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none">
       <defs>
         <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={color} stopOpacity={areaMode ? 0.2 : 0.12} />
+          {/* Real Grafana stat sparkline: area fill ~0.35 at top, 0 at bottom */}
+          <stop offset="0%" stopColor={color} stopOpacity={areaMode ? 0.35 : 0.15} />
           <stop offset="100%" stopColor={color} stopOpacity={0} />
         </linearGradient>
       </defs>
       <polygon points={area} fill={`url(#${gid})`} />
-      <polyline points={line} fill="none" stroke={color} strokeWidth="1.5" />
+      {/* Line at full opacity — container no longer dims it */}
+      <polyline points={line} fill="none" stroke={color} strokeWidth={areaMode ? 2 : 1.5} />
     </svg>
   );
 }
 
 // ══════════════════════════════════════════════════════════════
-// COUNT-UP
+// STAT VALUE — real Grafana shows values instantly, no animation
 // ══════════════════════════════════════════════════════════════
 function Counter({ to, suffix = "", color }: { to: number; suffix?: string; color: string }) {
-  const [v, setV] = useState(0);
   const isFloat = String(to).includes(".");
-  useEffect(() => {
-    const dur = 1200, start = performance.now();
-    let raf: number;
-    const tick = (now: number) => {
-      const p = Math.min((now - start) / dur, 1);
-      setV((1 - Math.pow(1 - p, 3)) * to);
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [to]);
   return (
     <span className="gf-stat__val" style={{ color }}>
-      {isFloat ? v.toFixed(1) : Math.round(v)}{suffix}
+      {isFloat ? to.toFixed(1) : to}{suffix}
     </span>
   );
 }
@@ -300,7 +290,7 @@ export default function GrafanaDashboard() {
             {/* Breadcrumb */}
             <nav className="gf-topbar__breadcrumb" aria-label="Breadcrumb">
               <span className="gf-topbar__crumb">Dashboards</span>
-              <span className="gf-topbar__sep">{ic.chevR}</span>
+              <span className="gf-topbar__sep">/</span>
               <span className="gf-topbar__current">EC2 Ubuntu Instance Overview</span>
             </nav>
 
@@ -308,7 +298,7 @@ export default function GrafanaDashboard() {
             <div className="gf-topbar__search" role="search" aria-label="Search Grafana">
               <span className="gf-topbar__search-icon">{ic.search}</span>
               <span className="gf-topbar__search-txt">Search...</span>
-              <span className="gf-topbar__search-kbd">⌘+k</span>
+              <span className="gf-topbar__search-kbd">⌘k</span>
             </div>
 
             {/* Right icons */}
@@ -518,7 +508,7 @@ export default function GrafanaDashboard() {
                           <span className="gf-gauge-row__pct" style={{ color: s.color }}>{s.pct}%</span>
                         </div>
                         <div className="gf-gauge-row__track">
-                          <div className="gf-gauge-row__fill" style={{ width: `${s.pct}%`, background: s.color }} />
+                          <div className="gf-gauge-row__fill" style={{ ['--bar-w' as string]: `${s.pct}%`, background: s.color } as React.CSSProperties} />
                         </div>
                       </div>
                     ))}

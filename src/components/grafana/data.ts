@@ -13,21 +13,23 @@ export const PROFILE = {
 };
 
 export const STATS = [
-  { label: "Projects Deployed", sublabel: "total", value: 10, color: "var(--gf-green)", suffix: "+" },
-  { label: "CI/CD Pipelines", sublabel: "pipelines built", value: 10, color: "var(--gf-blue)", suffix: "+" },
-  { label: "Uptime Achieved", sublabel: "avg availability", value: 99.9, color: "var(--gf-yellow)", suffix: "%" },
-  { label: "Containers Managed", sublabel: "docker + k8s pods", value: 50, color: "var(--gf-orange)", suffix: "+" },
+  // Exact Grafana palette.ts: greenDarkText, blueDarkText, fade2a (yellow), orangeDarkMain
+  { label: "Projects Deployed", sublabel: "total", value: 10, color: "#6ccf8e", suffix: "+" },
+  { label: "CI/CD Pipelines", sublabel: "pipelines built", value: 10, color: "#6e9fff", suffix: "+" },
+  { label: "Uptime Achieved", sublabel: "avg availability", value: 99.9, color: "#fade2a", suffix: "%" },
+  { label: "Containers Managed", sublabel: "docker + k8s pods", value: 50, color: "#ff9900", suffix: "+" },
 ];
 
 export const SKILLS = [
-  { name: "Docker", pct: 85, color: "#2496ed" },
-  { name: "Kubernetes", pct: 75, color: "#326ce5" },
-  { name: "Grafana Stack", pct: 90, color: "#ff6600" },
-  { name: "GitLab CI/CD", pct: 80, color: "#fc6d26" },
-  { name: "AWS", pct: 70, color: "#ff9900" },
-  { name: "Linux", pct: 85, color: "#fade2a" },
-  { name: "Prometheus", pct: 80, color: "#e6522c" },
-  { name: "Bash / Python", pct: 70, color: "#b877d9" },
+  // Colors from Grafana's classic visualization palette (palette-classic series)
+  { name: "Docker", pct: 85, color: "#5794F2" }, // classic blue series 5
+  { name: "Kubernetes", pct: 75, color: "#73BF69" }, // classic green series 2
+  { name: "Grafana Stack", pct: 90, color: "#FF9830" }, // Grafana brand orange
+  { name: "GitLab CI/CD", pct: 80, color: "#F2495C" }, // classic red series 4
+  { name: "AWS", pct: 70, color: "#FADE2A" }, // classic yellow series 1
+  { name: "Linux", pct: 85, color: "#8AB8FF" }, // classic light-blue series 6
+  { name: "Prometheus", pct: 80, color: "#FF780A" }, // orangeDarkText (Prometheus red-orange)
+  { name: "Bash / Python", pct: 70, color: "#B877D9" }, // classic purple series 7
 ];
 
 export const PROJECTS = [
@@ -44,14 +46,14 @@ export const EXPERIENCE = [
   {
     date: "July 2025 — Present",
     role: "DevOps Intern",
-    org: "Meditab Software Inc.",
+    org: "Meditab Software Inc., Ahmedabad, Gujarat",
     desc: "Docker, Kubernetes, Grafana stack monitoring, GitLab CI/CD pipelines, AWS cloud infrastructure. Building and maintaining production-grade deployment workflows.",
     status: "active" as const,
   },
   {
     date: "2022 — 2026",
     role: "B.Tech Computer Science",
-    org: "Parul University, Gujarat",
+    org: "Parul University, Vadodara, Gujarat",
     desc: "Linux fundamentals, networking, Bash/Python scripting, Git version control, DSA, full-stack development.",
     status: "done" as const,
   },
