@@ -18,7 +18,7 @@ Kavish Ambani's portfolio (`kavishambani.in`) is intentionally built as a **Graf
 The UI should feel like Grafana dashboard chrome, while the **content remains portfolio data** (skills, projects, experience, availability, contact).
 
 ### Stack
-- Next.js 15.1.4 (App Router)
+- Next.js 15.1.11 (App Router)
 - React 19
 - TypeScript
 - Tailwind CSS 3.4 (project-wide)
