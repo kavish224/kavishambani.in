@@ -67,7 +67,7 @@ export const TECH_STACK = [
   { name: "GitLab CI/CD", badge: "gitlab", category: "Pipelines", level: "Advanced", active: true },
   { name: "AWS", badge: "aws", category: "Cloud", level: "Intermediate", active: true },
   { name: "Terraform", badge: "terraform", category: "IaC", level: "Beginner", active: false },
-  { name: "Ansible", badge: "ansible", category: "Config Mgmt", level: "Beginner", active: false },
+  { name: "Ansible", badge: "ansible", category: "Config Management", level: "Beginner", active: false },
   { name: "Linux", badge: "linux", category: "OS", level: "Advanced", active: true },
 ];
 

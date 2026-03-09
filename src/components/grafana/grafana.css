@@ -83,7 +83,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
-  height: 100vh;
+  height: 100%;
+  /* inherit from body — avoids white border from 100vh mismatch */
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -340,23 +341,43 @@
 
 
 /* ══════════════════════════════════════════════════════════════
-   LAYOUT
+   LAYOUT — Flex scroll chain
+   Chain: gf-root(100%) > gf-layout(hidden) > gf-main-container(hidden,min-h:0) > gf-page(scroll)
    ══════════════════════════════════════════════════════════════ */
 .gf-layout {
   display: flex;
+  height: 100%;
+  /* 100% of body which is 100% of html = full viewport, no white border */
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Main column: topbar + page content
+   min-height:0 is the flex scroll trick — without it the flex child
+   expands to fit its content, overflowing the fixed-height parent */
+.gf-main-container {
   flex: 1;
   min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
+/* gf-page is the SOLE scroll owner in the chain */
 .gf-page {
   flex: 1;
+  min-height: 0;
+  /* flex scroll trick #2 — mandatory */
   min-width: 0;
   background: var(--gf-canvas);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  /* only this element scrolls */
   overflow-x: hidden;
+  overscroll-behavior: contain;
 }
 
 
@@ -378,6 +399,8 @@
   top: 0;
   height: 100%;
   z-index: 900;
+  /* Prevent scroll chaining from sidebar to page */
+  overscroll-behavior: contain;
 }
 
 /* Header row inside the mega menu (logo + org switcher + dock/close) */
@@ -422,12 +445,16 @@
 
 /* Scrollable nav list */
 .gf-sidemenu__list {
+  list-style: none;
+  padding: 8px 8px 16px 4px;
+  margin: 0;
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  /* padding: theme.spacing(1,1,2,0.5) = 8px 8px 16px 4px */
-  padding: 8px 8px 16px 4px;
+  min-height: 0;
+  /* essential for flex scrolling */
 }
+
 
 /* Each nav item — from MegaMenuItem getStyles */
 .gf-nav-item {
@@ -902,7 +929,7 @@
    DASHBOARD CANVAS
    ══════════════════════════════════════════════════════════════ */
 .gf-canvas {
-  padding: 8px;
+  padding: 8px 8px 40px 8px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -1088,6 +1115,8 @@
 .gf-panel-body {
   flex: 1;
   overflow: hidden;
+  overflow-y: auto;
+  /* allow panel content to scroll if it overflows */
   position: relative;
   min-height: 0;
 }
@@ -1175,7 +1204,7 @@
 }
 
 .gf-h-md {
-  height: 260px;
+  height: 320px;
 }
 
 .gf-h-xl {
@@ -1793,7 +1822,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6px;
-  padding: 10px 12px;
+  padding: 10px 12px 24px 12px;
+  /* extra bottom padding for mobile items */
   height: 100%;
   align-content: start;
 }
@@ -1817,15 +1847,13 @@
 }
 
 .gf-contact-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 28px;
   height: 28px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   color: var(--gf-text-sec);
   background: var(--gf-canvas);
   border: 1px solid var(--gf-border-weak);
@@ -1925,77 +1953,288 @@
 }
 
 
+/* (gf-layout consolidated above) */
+
+.gf-nav-overlay {
+  display: none;
+}
+
+/* Hamburger — hidden on desktop */
+.gf-topbar__hamburger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 2px;
+  color: var(--gf-text-sec);
+  flex-shrink: 0;
+  transition: background 0.1s, color 0.1s;
+  margin-left: 8px;
+}
+
+.gf-topbar__hamburger:hover {
+  background: var(--gf-hover);
+  color: var(--gf-text);
+}
+
+/* Topbar default padding (desktop: sidemenu provides left space) */
+.gf-topbar {
+  padding-left: 16px;
+  padding-right: 8px;
+}
+
 /* ══════════════════════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — ≤1280px: narrow sidebar
    ══════════════════════════════════════════════════════════════ */
 @media (max-width: 1280px) {
+  .gf-sidemenu {
+    width: 240px;
+    min-width: 240px;
+  }
+
   .gf-w-25 {
     width: calc(50% - 4px);
   }
 
-  .gf-sidemenu {
-    width: 240px;
-    min-width: 240px;
-  }
-
-  .gf-topbar__logo-section {
-    width: 240px;
-    min-width: 240px;
+  .gf-topbar__search {
+    width: 220px;
   }
 }
 
-@media (max-width: 960px) {
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — ≤1024px: icon-rail sidebar
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+
+  /* Collapse sidebar to icon-only rail — 56px, Grafana exact width */
   .gf-sidemenu {
-    width: 200px;
-    min-width: 200px;
+    width: 56px;
+    min-width: 56px;
+    overflow: visible;
+  }
+
+  .gf-sidemenu__hdr {
+    padding: 0 8px;
+    justify-content: center;
+  }
+
+  .gf-sidemenu__hdr-brand span,
+  .gf-sidemenu__hdr-close {
+    display: none;
+  }
+
+  .gf-nav-label,
+  .gf-nav-badge,
+  .gf-nav-chevron {
+    display: none;
+  }
+
+  .gf-nav-item {
+    justify-content: center;
+    padding: 0 8px;
+  }
+
+  .gf-nav-icon {
+    width: auto;
+  }
+
+  .gf-sidemenu__bottom {
+    padding: 8px 4px;
+  }
+
+  .gf-sidemenu__bottom .gf-nav-item {
+    justify-content: center;
+  }
+
+  .gf-topbar__search {
+    width: 180px;
+  }
+
+  .gf-topbar__invite {
+    display: none;
   }
 }
 
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — ≤768px: sidebar hidden, hamburger shown
+   ══════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
+
+  /* Sidebar hidden off-screen, slides in when .gf-sidemenu--open */
+  .gf-sidemenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 2000;
+    width: 260px;
+    min-width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+    /* Override icon-rail from 1024px */
+    overflow: auto;
+  }
+
+  .gf-sidemenu--open {
+    transform: translateX(0);
+  }
+
+  /* Restore full labels when open as overlay */
+  .gf-sidemenu--open .gf-nav-label,
+  .gf-sidemenu--open .gf-nav-badge {
+    display: inline;
+  }
+
+  .gf-sidemenu--open .gf-sidemenu__hdr-brand span,
+  .gf-sidemenu--open .gf-sidemenu__hdr-close {
+    display: flex;
+  }
+
+  .gf-sidemenu--open .gf-nav-item {
+    justify-content: flex-start;
+    padding: 0 8px 0 4px;
+  }
+
+  .gf-sidemenu--open .gf-nav-icon {
+    width: 22px;
+  }
+
+  /* Overlay backdrop */
+  .gf-nav-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 1999;
+    background: rgba(0, 0, 0, 0.65);
+  }
+
+  /* Show hamburger */
+  .gf-topbar__hamburger {
+    display: flex;
+  }
+
+  /* Topbar — adjust for no sidemenu */
+  .gf-topbar {
+    padding-left: 4px;
+  }
+
+  .gf-topbar__search {
+    width: 160px;
+  }
+
+  /* Panels: 2-up stat panels */
+  .gf-w-25 {
+    width: calc(50% - 4px);
+  }
+
+  .gf-w-33 {
+    width: calc(50% - 4px);
+  }
+
+  /* Shorter stats on tablet */
+  .gf-h-stat {
+    height: 160px;
+  }
+
+  .gf-stat__val {
+    font-size: 42px;
+  }
+
+  .gf-h-gauge {
+    height: 280px;
+  }
+
+  .gf-h-xl {
+    height: 320px;
+  }
+
+  .gf-h-md {
+    height: 220px;
+  }
+
+  .gf-h-logs {
+    height: 360px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — ≤600px: full-width, mobile-first layout
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
 
   .gf-w-25,
   .gf-w-33,
   .gf-w-50 {
     width: 100%;
   }
-}
 
-@media (max-width: 600px) {
-  .gf-sidemenu {
-    display: none;
+  /* Mobile stat panels — compact */
+  .gf-h-stat {
+    height: 140px;
   }
 
-  .gf-topbar__logo-section {
-    width: auto;
-    min-width: 0;
-    border-right: none;
+  .gf-stat__val {
+    font-size: 36px;
+    letter-spacing: -2px;
   }
 
+  .gf-stat__fg {
+    padding: 0 12px 10px;
+  }
+
+  .gf-h-gauge {
+    height: 320px;
+  }
+
+  .gf-h-logs {
+    height: 400px;
+  }
+
+  .gf-h-xl {
+    height: 360px;
+  }
+
+  .gf-h-md {
+    height: auto;
+    min-height: 360px;
+    /* Let it expand if content is long, but stay at least 360px */
+  }
+
+  /* Search hidden on small phones — too cramped */
   .gf-topbar__search {
     display: none;
   }
 
-  .gf-topbar__invite {
-    display: none;
-  }
-
+  /* Topbar breadcrumb: only show current page */
   .gf-topbar__crumb {
     display: none;
   }
 
-  .gf-stat__val {
-    font-size: 28px;
+  .gf-topbar__sep {
+    display: none;
   }
 
+  /* Ctrlbar: hide variable chips, show only time picker */
+  .gf-ctrlbar__left {
+    display: none;
+  }
+
+  .gf-ctrlbar {
+    justify-content: flex-end;
+  }
+
+  /* Contact grid: 1 column */
   .gf-contact {
     grid-template-columns: 1fr;
   }
 
-  /* Hero — mobile stack */
+  /* Hero panel: stack vertically */
   .gf-hero-panel {
     flex-direction: column;
     gap: 16px;
-    padding: 16px;
+    padding: 14px 16px;
   }
 
   .gf-hero-vdiv {
@@ -2004,8 +2243,56 @@
 
   .gf-hero-right {
     width: 100%;
+    min-width: 0;
+  }
+
+  .gf-hero-bio {
+    max-width: 100%;
+  }
+
+  /* Log rows: hide timestamp on very small screens */
+  .gf-log-ts {
+    display: none;
+  }
+
+  /* Table: compress */
+  .gf-table th:nth-child(3),
+  .gf-table td:nth-child(3) {
+    display: none;
+  }
+
+  /* Row label: smaller */
+  .gf-row__label {
+    font-size: 11px;
+  }
+
+  /* Topbar right: hide non-essential icons */
+  .gf-topbar__icon:nth-child(n+3) {
+    display: none;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE — ≤380px: tiny phones
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+  .gf-h-stat {
+    height: 120px;
+  }
+
+  .gf-stat__val {
+    font-size: 30px;
+  }
+
+  .gf-hero-name {
+    font-size: 17px !important;
+  }
+
+  .gf-canvas {
+    padding: 0 4px 4px;
+  }
+}
+
 
 
 /* ══════════════════════════════════════════════════════════════

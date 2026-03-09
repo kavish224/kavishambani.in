@@ -186,57 +186,6 @@ const NAV = [
   { icon: ic.connections, label: "Connections", href: undefined },
 ];
 
-function SideMenu() {
-  return (
-    <aside className="gf-sidemenu" aria-label="Navigation">
-      {/* MegaMenuHeader — same height as topbar (48px) */}
-      <div className="gf-sidemenu__hdr">
-        <div className="gf-sidemenu__hdr-brand">
-          <GrafanaLogo size={22} />
-          <span>Grafana</span>
-        </div>
-        <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-          <button className="gf-sidemenu__hdr-close" title="Dock menu">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 3v18" /></svg>
-          </button>
-          <button className="gf-sidemenu__hdr-close" title="Close menu">{ic.times}</button>
-        </div>
-      </div>
-
-      {/* Nav list — padding: 8px 8px 16px 4px from MegaMenu source */}
-      <ul className="gf-sidemenu__list">
-        {NAV.map((item, i) => {
-          const cls = `gf-nav-item${item.active ? " gf-nav-item--active" : ""}`;
-          const content = (
-            <>
-              <span className="gf-nav-icon">{item.icon}</span>
-              <span className="gf-nav-label">{item.label}</span>
-              {item.isNew && <span className="gf-nav-badge">New!</span>}
-              {item.chev && <span className="gf-nav-chevron">{ic.chevD}</span>}
-            </>
-          );
-          return (
-            <li key={i}>
-              {item.href ? (
-                <Link href={item.href} className={cls}>{content}</Link>
-              ) : (
-                <button className={cls}>{content}</button>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-
-      <div className="gf-sidemenu__bottom">
-        <button className="gf-nav-item">
-          <span className="gf-nav-icon">{ic.admin}</span>
-          <span className="gf-nav-label">Admin</span>
-          <span className="gf-nav-chevron">{ic.chevR}</span>
-        </button>
-      </div>
-    </aside>
-  );
-}
 
 // ══════════════════════════════════════════════════════════════
 // MAIN DASHBOARD
@@ -247,6 +196,7 @@ export default function GrafanaDashboard() {
   const [tpOpen, setTpOpen] = useState(false);
   const [openPanel, setOpenPanel] = useState<string | null>(null);
   const [toastMsg, setToastMsg] = useState("");
+  const [sideOpen, setSideOpen] = useState(false); // mobile sidebar
   const tpRef = useRef<HTMLDivElement>(null);
 
   const handleCopyEmail = (e: React.MouseEvent) => {
@@ -280,12 +230,72 @@ export default function GrafanaDashboard() {
     <div className="gf-root">
 
       {/* ══════ MAIN LAYOUT ══════ */}
-      <div className="gf-layout" style={{ display: 'flex', height: '100vh', overflow: 'hidden', width: '100vw' }}>
-        <SideMenu />
+      <div className="gf-layout">
+        {/* Mobile overlay backdrop */}
+        {sideOpen && (
+          <div className="gf-nav-overlay" onClick={() => setSideOpen(false)} aria-hidden="true" />
+        )}
 
-        <div className="gf-main-container" style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, overflow: 'hidden' }}>
+        <aside className={`gf-sidemenu${sideOpen ? " gf-sidemenu--open" : ""}`} aria-label="Navigation">
+          {/* MegaMenuHeader */}
+          <div className="gf-sidemenu__hdr">
+            <div className="gf-sidemenu__hdr-brand">
+              <GrafanaLogo size={22} />
+              <span>Grafana</span>
+            </div>
+            <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+              <button className="gf-sidemenu__hdr-close" title="Dock menu">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 3v18" /></svg>
+              </button>
+              <button className="gf-sidemenu__hdr-close" title="Close menu" onClick={() => setSideOpen(false)}>{ic.times}</button>
+            </div>
+          </div>
+
+          {/* Nav list */}
+          <ul className="gf-sidemenu__list">
+            {NAV.map((item, i) => {
+              const cls = `gf-nav-item${item.active ? " gf-nav-item--active" : ""}`;
+              const content = (
+                <>
+                  <span className="gf-nav-icon">{item.icon}</span>
+                  <span className="gf-nav-label">{item.label}</span>
+                  {item.isNew && <span className="gf-nav-badge">New!</span>}
+                  {item.chev && <span className="gf-nav-chevron">{ic.chevD}</span>}
+                </>
+              );
+              return (
+                <li key={i}>
+                  {item.href ? (
+                    <Link href={item.href} className={cls} onClick={() => setSideOpen(false)}>{content}</Link>
+                  ) : (
+                    <button className={cls}>{content}</button>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="gf-sidemenu__bottom">
+            <button className="gf-nav-item" onClick={() => setSideOpen(false)}>
+              <span className="gf-nav-icon">{ic.admin}</span>
+              <span className="gf-nav-label">Admin</span>
+              <span className="gf-nav-chevron">{ic.chevR}</span>
+            </button>
+          </div>
+        </aside>
+
+        <div className="gf-main-container">
           {/* ══════ TOP BAR — 48px ══════ */}
-          <header className="gf-topbar" style={{ paddingLeft: 16 }}>
+          <header className="gf-topbar">
+            {/* Hamburger — mobile only */}
+            <button
+              className="gf-topbar__hamburger"
+              onClick={() => setSideOpen(s => !s)}
+              aria-label="Open navigation"
+              title="Open navigation"
+            >
+              {ic.menu}
+            </button>
 
             {/* Breadcrumb */}
             <nav className="gf-topbar__breadcrumb" aria-label="Breadcrumb">
