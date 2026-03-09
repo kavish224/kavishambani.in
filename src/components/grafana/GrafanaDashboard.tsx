@@ -240,7 +240,7 @@ function SideMenu() {
       <div className="gf-sidemenu__bottom">
         <button className="gf-nav-item">
           <span className="gf-nav-icon">{ic.admin}</span>
-          <span className="gf-nav-label">Administration</span>
+          <span className="gf-nav-label">Admin</span>
           <span className="gf-nav-chevron">{ic.chevR}</span>
         </button>
       </div>
