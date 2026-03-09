@@ -76,7 +76,7 @@ export const AVAILABILITY = [
 ];
 
 export const CONTACT = {
-  email: "kavish@kavishambani.in",
+  email: "kavishkkambani@gmail.com",
   github: { url: "https://github.com/kavish224", handle: "kavish224" },
   linkedin: { url: "https://www.linkedin.com/in/kavish-ambani", handle: "kavish-ambani" },
   location: "Ahmedabad, Gujarat, India",
