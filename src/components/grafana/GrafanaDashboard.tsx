@@ -224,8 +224,6 @@ export default function GrafanaDashboard() {
     [98.5, 99, 99.2, 99.5, 99.3, 99.8, 99.7, 99.9, 99.9, 100, 99.9, 100],
     [5, 10, 18, 24, 29, 33, 37, 41, 45, 48, 50, 50],
   ];
-  const volH = PROJECTS.map((_, i) => 30 + ((i * 13) % 60));
-
   return (
     <div className="gf-root">
 
