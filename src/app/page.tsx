@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "Kavish Ambani — DevOps Portfolio",
     description:
       "Kavish Ambani's portfolio — presented as a Grafana dashboard. Docker, Kubernetes, CI/CD, AWS, and monitoring expertise.",
-    url: "https://kavishambani.in",
+    url: "https://www.kavishambani.in/",
     siteName: "kavishambani.in",
     locale: "en_IN",
     type: "website",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       "Kavish Ambani's portfolio — presented as a Grafana dashboard. Docker, Kubernetes, CI/CD, AWS, and monitoring expertise.",
   },
   alternates: {
-    canonical: "https://kavishambani.in",
+    canonical: "https://www.kavishambani.in/",
   },
 };
 
